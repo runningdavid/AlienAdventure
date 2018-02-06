@@ -8,7 +8,7 @@ public class ObstacleContainer : MonoBehaviour {
     public Vector3 translate = Vector3.down;
 
     [Tooltip("Moving speed of current container")]
-    public float speed = 3.00f;
+    public float speed = 5.00f;
 
     [Tooltip("Container width in world units")]
     public float width = 9.00f;
@@ -22,19 +22,18 @@ public class ObstacleContainer : MonoBehaviour {
     [Tooltip("Ending position for the container. Container may be recycled upon reaching this position")]
     public Vector3 endingPosition;
 
-    private bool isMoving = false;
-
     public bool IsTripEnded
     {
         get
         {
-            // TODO: calculate value based on current container height
             return transform.position.y < endingPosition.y;
         }
     }
 
     public bool IsReady { get; set; }
 
+    private bool isMoving = false;
+    
     // Use this for initialization
     private void Start()
     {
@@ -97,7 +96,7 @@ public class ObstacleContainer : MonoBehaviour {
         this.speed = speed;
     }
     
-    // TODO: need to restrict obstacle to not exceed current container
+    // TODO: need to handle situations when object exceed container bound
     public void AddObstacle(GameObject obstacle, Vector3? position = null)
     {
         if (position == null)
@@ -111,8 +110,19 @@ public class ObstacleContainer : MonoBehaviour {
 
     public void AddObstacleUsingRelativePosition(GameObject obstacle, Vector3 position)
     {
+        // Only need to check in y direciton. Exceeding x direction is fine.
+        if (position.y < transform.position.y - height / 2 || position.y > transform.position.y + height / 2)
+        {
+            Debug.LogWarning("Object exceeding container horizontal boundary");
+        }
+
         obstacle.transform.parent = transform;
         obstacle.transform.localPosition = position;
+    }
+
+    public void AddObstacleUsingRatio(GameObject obstacle, Vector3 posInRatio)
+    {
+
     }
     
 }
