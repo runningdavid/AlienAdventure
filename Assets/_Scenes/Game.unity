@@ -158,8 +158,8 @@ MonoBehaviour:
   - {fileID: 1488981009819708, guid: 67b96c9d91235c245a6de8216dc80324, type: 2}
   - {fileID: 1583339156582410, guid: fbb25764d99d85948a784b6f0524ab4d, type: 2}
   - {fileID: 1614045225632160, guid: 62ad7732103357c49a16b1826ad328a4, type: 2}
-  containerCount: 2
-  numContainersInProgress: 1
+  containerCount: 3
+  maxContainersInProgress: 2
 --- !u!1 &337584533
 GameObject:
   m_ObjectHideFlags: 0
