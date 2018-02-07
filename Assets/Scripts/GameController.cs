@@ -14,12 +14,14 @@ public class GameController : MonoBehaviour {
     [Tooltip("Number of containers allowed to move at the same time")]
     public int maxContainersInProgress = 1;
 
+    public GameObject obstacleContainerPrefab;
+
     private int prefabCount;
     private Queue<GameObject> containerQueue;
     private List<GameObject> InProgressContainerList;
 
-    private Vector3 bottomLeftPos;
-    private Vector3 upperRightPos;
+    private Vector3 screenBottomLeftPos;
+    private Vector3 screenUpperRightPos;
 
     // Use this for initialization
     private void Start()
@@ -31,8 +33,8 @@ public class GameController : MonoBehaviour {
 
         // calculate screen size in world point units
         float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
-        bottomLeftPos = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distanceToCamera));
-        upperRightPos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distanceToCamera));
+        screenBottomLeftPos = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distanceToCamera));
+        screenUpperRightPos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distanceToCamera));
 
         // initialize containers' container
         GameObject containerCollection = GameObject.Find("ContainerCollection");
@@ -45,11 +47,11 @@ public class GameController : MonoBehaviour {
         // initialize container
         for (int i = 0; i < containerCount; i++)
         {
-            GameObject containerObject = new GameObject("_container_" + i);
-            ObstacleContainer container = containerObject.AddComponent<ObstacleContainer>();
-            container.originalPosition = new Vector3(0, upperRightPos.y + container.height / 2);
-            container.endingPosition = new Vector3(0, bottomLeftPos.y - container.height / 2);
-            SetParent(containerObject, containerCollection);
+            // containerObject will contain a grid
+            GameObject containerObject = Instantiate(obstacleContainerPrefab, containerCollection.transform);
+            ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
+            container.originalPosition = new Vector3(0, screenUpperRightPos.y + container.height / 2);
+            container.endingPosition = new Vector3(0, screenBottomLeftPos.y - container.height / 2);
             container.Reset();
             containerQueue.Enqueue(containerObject);
         }
@@ -109,7 +111,7 @@ public class GameController : MonoBehaviour {
             obstacleList.Add(obstacleObject);
         }
 
-        container.AddObstalcesToRandomPositions(obstacleList);
+        container.AddObstalcesToRandomGridPositions(obstacleList);
 
         // TODO: test handling big objects, they should not be intentionally be placed outside of container,
         // container should throw an error in that case
@@ -141,7 +143,7 @@ public class GameController : MonoBehaviour {
     private bool HasContainerCompletelyLeft(GameObject containerObject)
     {
         ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
-        return containerObject.transform.position.y + container.height / 2 <= upperRightPos.y;
+        return containerObject.transform.position.y + container.height / 2 <= screenUpperRightPos.y;
     }
 
     private void SetRandomColor(GameObject obstacleObject)

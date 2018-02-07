@@ -37,6 +37,9 @@ public class ObstacleContainer : MonoBehaviour {
 
     public bool IsReady { get; set; }
 
+    // TODO: might have to use a grid system to handle object overlapping
+    private Grid grid;
+
     private bool isMoving = false;
 
     private float xMin;
@@ -51,6 +54,8 @@ public class ObstacleContainer : MonoBehaviour {
         xMax = width / 2;
         yMin = -height / 2;
         yMax = height / 2;
+
+        grid = GetComponent<Grid>();
     }
 
     // Update is called once per frame
@@ -142,6 +147,19 @@ public class ObstacleContainer : MonoBehaviour {
         obstacle.transform.localPosition = position;
     }
 
+    public void AddObstacleToGridUsingRelativePosition(GameObject obstacle, Vector3 position)
+    {
+        if (position.x < transform.position.x - width / 2 || position.x > transform.position.x + width / 2
+            || position.y < transform.position.y - height / 2 || position.y > transform.position.y + height / 2)
+        {
+            Debug.LogWarning("Object pivot exceeds container boundary");
+        }
+
+        obstacle.transform.parent = transform;
+        Vector3Int cellPosition = grid.LocalToCell(position);
+        obstacle.transform.localPosition = grid.CellToLocal(cellPosition);
+    }
+
     /// <summary>
     /// Add obstacle to the container using a vector of width/height ratio
     /// </summary>
@@ -175,6 +193,28 @@ public class ObstacleContainer : MonoBehaviour {
                 discardCount++;
             }
             
+        }
+        Debug.LogWarning(discardCount + " object(s) discarded");
+    }
+
+    public void AddObstalcesToRandomGridPositions(List<GameObject> obstacleList)
+    {
+        int discardCount = 0;
+        foreach (GameObject obstacle in obstacleList)
+        {
+            float xPos = Random.Range(xMin, xMax);
+            float yPos = Random.Range(yMin, yMax);
+            Vector3 pos = new Vector3(xPos, yPos, 0);
+            if (IsObstacleWithinHorizontalBoundaries(obstacle, pos))
+            {
+                AddObstacleToGridUsingRelativePosition(obstacle, pos);
+            }
+            else
+            {
+                Destroy(obstacle);
+                discardCount++;
+            }
+
         }
         Debug.LogWarning(discardCount + " object(s) discarded");
     }
