@@ -102,11 +102,12 @@ public class GameController : MonoBehaviour {
     {
         ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
         List<GameObject> obstacleList = new List<GameObject>();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 500; i++)
         {
             GameObject obstacleObject = GetRandomObstacle();
             SetRandomColor(obstacleObject);
-            SetRandomScale(obstacleObject, 1.00f, 3.00f);
+            SetRandomScale(obstacleObject, 1.00f, 6.00f);
+            SetRandomRotation(obstacleObject);
             //container.AddObstacleUsingRelativePosition(obstacleObject, new Vector3(i, 0, 0));
             obstacleList.Add(obstacleObject);
         }
@@ -115,11 +116,11 @@ public class GameController : MonoBehaviour {
 
         // TODO: test handling big objects, they should not be intentionally be placed outside of container,
         // container should throw an error in that case
-        GameObject bigObstacleObject = GetRandomObstacle();
-        bigObstacleObject.transform.localScale = new Vector3(9, 9, 0);
-        container.AddObjectUsingRelativePosition(bigObstacleObject, new Vector3(-5.5f, 0, 0));
+        //GameObject bigObstacleObject = GetRandomObstacle();
+        //bigObstacleObject.transform.localScale = new Vector3(9, 9, 0);
+        //container.AddObjectUsingRelativePosition(bigObstacleObject, new Vector3(-5.5f, 0, 0));
         
-        container.GenerateFeasiblePath(2, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
+        container.GenerateFeasiblePath(1, 2, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
        
     }
 
@@ -163,6 +164,14 @@ public class GameController : MonoBehaviour {
     private void SetScale(GameObject obstacleObject, Vector3 scale)
     {
         obstacleObject.transform.localScale = scale;
+    }
+
+    private void SetRandomRotation(GameObject obstacleObject)
+    {
+        float xAngle = Random.Range(0, 30);
+        float yAngle = Random.Range(0, 15);
+        float zAngle = Random.Range(0, 359);
+        obstacleObject.transform.Rotate(new Vector3(xAngle, yAngle, zAngle));
     }
 
     private void SetParent(GameObject child, GameObject parent)

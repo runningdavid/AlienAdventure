@@ -57,6 +57,7 @@ public class ObstacleContainer : MonoBehaviour {
     // TODO: might have to use a grid system to handle object overlapping
     private Grid containerGrid;
     private List<Vector3> feasiblePathLocalPositionList;
+    private HashSet<int> occupiedCellPositions;
     private GameObject player;
     private bool isMoving = false;
 
@@ -75,7 +76,9 @@ public class ObstacleContainer : MonoBehaviour {
 
         containerGrid = GetComponent<Grid>();
         feasiblePathLocalPositionList = new List<Vector3>();
+        occupiedCellPositions = new HashSet<int>();
         player = GameObject.Find("Player");
+        
     }
 
     // Update is called once per frame
@@ -127,6 +130,7 @@ public class ObstacleContainer : MonoBehaviour {
         IsReady = false;
         transform.position = originalPosition;
         feasiblePathLocalPositionList = new List<Vector3>();
+        occupiedCellPositions = new HashSet<int>();
     }
 
     public void SetSpeed(float speed)
@@ -225,10 +229,11 @@ public class ObstacleContainer : MonoBehaviour {
             Vector3 pos = new Vector3(xPos, yPos, 0);
             // convert to grid units and get that cell position in local units before checking!
             Vector3Int cellPosition = containerGrid.LocalToCell(pos);
-            Vector3 gridPosition = containerGrid.CellToLocal(cellPosition);
-            if (IsObjectWithinHorizontalBoundaries(obstacle, gridPosition))
+            Vector3 localPosition = containerGrid.CellToLocal(cellPosition);
+            if (IsObjectWithinHorizontalBoundaries(obstacle, localPosition) && !WillObjectOverlapWithOccupiedPositions(obstacle, localPosition))
             {
-                AddObjectUsingRelativePosition(obstacle, gridPosition);
+                //occupiedCellPositions.Add(HashVector3Int(cellPosition));
+                AddObjectUsingRelativePosition(obstacle, localPosition);
             }
             else
             {
@@ -249,7 +254,7 @@ public class ObstacleContainer : MonoBehaviour {
     /// <param name="localInitialPosition"></param>
     /// <param name="pathWidth"></param>
     /// <param name="variation">The more variation the difficult it gets</param>
-    public void GenerateFeasiblePath(int variation, GameObject lastContainerObject)
+    public void GenerateFeasiblePath(int pathWidth, int variation, GameObject lastContainerObject)
     {
         float initXCellPos = containerGrid.WorldToLocal(new Vector3(player.transform.position.x, 0, 0)).x;
         Vector3Int beginCell = containerGrid.LocalToCell(new Vector3(initXCellPos, localYMin, 0));
@@ -268,11 +273,21 @@ public class ObstacleContainer : MonoBehaviour {
         for (int currentCellYPos = beginCellYPos; currentCellYPos <= endCellYPos; currentCellYPos++)
         {
             int currentXMin = previousCellXPos - variation < cellMinXPos ? previousCellXPos : previousCellXPos - variation;
-            int currentXMax = previousCellXPos + variation > cellMaxXPos ? previousCellXPos : previousCellXPos + variation;
+            int currentXMax = previousCellXPos + variation + pathWidth > cellMaxXPos ? previousCellXPos - pathWidth : previousCellXPos + variation;
             int currentCellXPos = Random.Range(currentXMin, currentXMax + 1);
             Vector3Int currentCell = new Vector3Int(currentCellXPos, currentCellYPos, 0);
             feasiblePathLocalPositionList.Add(containerGrid.CellToLocal(currentCell));
-            previousCellXPos = currentCellXPos;
+
+            // TODO: the algorithm may not be exactly correct but can be used
+            occupiedCellPositions.Add(HashVector3Int(currentCell));
+            for (int i = 1; i < pathWidth; i++)
+            {
+                Vector3Int pathCell = new Vector3Int(currentCell.x + i, currentCell.y, currentCell.z);
+                occupiedCellPositions.Add(HashVector3Int(pathCell));
+                feasiblePathLocalPositionList.Add(containerGrid.CellToLocal(pathCell));
+            }
+
+            previousCellXPos = currentCell.x;
         }
 
         if (shouldVisualizePath)
@@ -313,5 +328,44 @@ public class ObstacleContainer : MonoBehaviour {
         float yPos = position.y;
 
         return yPos - (height / 2) >= localYMin && yPos + (height / 2) <= localYMax;
+    }
+
+    /// <summary>
+    /// Determines whether object will overlap with occupied positions
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    private bool WillObjectOverlapWithOccupiedPositions(GameObject obj, Vector3 position)
+    {
+        Vector3 scale = obj.transform.localScale;
+        float width = scale.x;
+        float height = scale.y;
+        float xPos = position.x;
+        float yPos = position.y;
+
+        int xMinCell = containerGrid.LocalToCell(new Vector3(xPos - width / 2, 0, 0)).x;
+        int xMaxCell = containerGrid.LocalToCell(new Vector3(xPos + width / 2, 0, 0)).x;
+        int yMinCell = containerGrid.LocalToCell(new Vector3(0, yPos - height / 2, 0)).y;
+        int yMaxCell = containerGrid.LocalToCell(new Vector3(0, yPos + height / 2, 0)).y;
+
+        for (int i = xMinCell; i <= xMaxCell; i++)
+        {
+            for (int j = yMinCell; j <= yMaxCell; j++)
+            {
+                if (occupiedCellPositions.Contains(HashVector3Int(new Vector3Int(i, j, 0))))
+                {
+                    return true;
+                }
+                occupiedCellPositions.Add(HashVector3Int(new Vector3Int(i, j, 0)));
+            }
+        }
+
+        return false;
+    }
+
+    public static int HashVector3Int(Vector3Int vec)
+    {
+        return vec.x * 1000 + vec.z + vec.y * 1000000;
     }
 }
