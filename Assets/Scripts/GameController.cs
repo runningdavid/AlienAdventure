@@ -111,13 +111,13 @@ public class GameController : MonoBehaviour {
             obstacleList.Add(obstacleObject);
         }
 
-        container.AddObstalcesToRandomGridPositions(obstacleList);
+        container.AddObjectsToRandomGridPositions(obstacleList);
 
         // TODO: test handling big objects, they should not be intentionally be placed outside of container,
         // container should throw an error in that case
         GameObject bigObstacleObject = GetRandomObstacle();
         bigObstacleObject.transform.localScale = new Vector3(9, 9, 0);
-        container.AddObstacleUsingRelativePosition(bigObstacleObject, new Vector3(-5.5f, 0, 0));
+        container.AddObjectUsingRelativePosition(bigObstacleObject, new Vector3(-5.5f, 0, 0));
     }
 
     // TODO: must ensure there's a way through

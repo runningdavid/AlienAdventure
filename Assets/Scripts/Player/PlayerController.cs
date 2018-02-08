@@ -33,22 +33,24 @@ public class PlayerController : MonoBehaviour {
     private void Update()
     {
         transform.Translate(playerTranslate * playerSpeed * Time.deltaTime);
+        // TODO: may need to add object rotation
+        // TODO: player control method is subject to change
         MoveWithMouse();
     }
 
+    // TODO: may need to set a playerDistanceToCamera variable
     private void MoveWithMouse()
     {
         Vector3 mousePosInWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosInWorldPoint.x = Mathf.Clamp(mousePosInWorldPoint.x, xMin, xMax);
         mousePosInWorldPoint.y = Mathf.Clamp(mousePosInWorldPoint.y, yMin, yMax);
-        // TODO: may need to set a playerDistanceToCamera variable
         transform.position = new Vector3(mousePosInWorldPoint.x, mousePosInWorldPoint.y, 10);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("You've collided with an obstacle");
-
+        
         // TODO: handle lose condition
     }
 }

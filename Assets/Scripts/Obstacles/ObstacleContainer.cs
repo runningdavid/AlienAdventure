@@ -117,25 +117,25 @@ public class ObstacleContainer : MonoBehaviour {
     /// <summary>
     /// Add obstacle using absolute positioning
     /// </summary>
-    /// <param name="obstacle"></param>
+    /// <param name="obj"></param>
     /// <param name="position"></param>
-    public void AddObstacle(GameObject obstacle, Vector3? position = null)
+    public void AddObject(GameObject obj, Vector3? position = null)
     {
         if (position == null)
         {
             position = transform.position;
         }
 
-        obstacle.transform.parent = transform;
-        obstacle.transform.position = position.Value;
+        obj.transform.parent = transform;
+        obj.transform.position = position.Value;
     }
 
     /// <summary>
     /// Add obstalce to the container and position it relative to the container's pivot (center of container)
     /// </summary>
-    /// <param name="obstacle"></param>
+    /// <param name="obj"></param>
     /// <param name="position"></param>
-    public void AddObstacleUsingRelativePosition(GameObject obstacle, Vector3 position)
+    public void AddObjectUsingRelativePosition(GameObject obj, Vector3 position)
     {        
         if (position.x < transform.position.x - width / 2 || position.x > transform.position.x + width / 2 
             || position.y < transform.position.y - height / 2 || position.y > transform.position.y + height / 2)
@@ -143,11 +143,16 @@ public class ObstacleContainer : MonoBehaviour {
             Debug.LogWarning("Object pivot exceeds container boundary");
         }
 
-        obstacle.transform.parent = transform;
-        obstacle.transform.localPosition = position;
+        obj.transform.parent = transform;
+        obj.transform.localPosition = position;
     }
 
-    public void AddObstacleToGridUsingRelativePosition(GameObject obstacle, Vector3 position)
+    /// <summary>
+    /// Converts relative vector position to nearest cell and add obstacle to that cell in the grid
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="position"></param>
+    public void AddObjectToGridUsingRelativePosition(GameObject obj, Vector3 position)
     {
         if (position.x < transform.position.x - width / 2 || position.x > transform.position.x + width / 2
             || position.y < transform.position.y - height / 2 || position.y > transform.position.y + height / 2)
@@ -155,17 +160,17 @@ public class ObstacleContainer : MonoBehaviour {
             Debug.LogWarning("Object pivot exceeds container boundary");
         }
 
-        obstacle.transform.parent = transform;
+        obj.transform.parent = transform;
         Vector3Int cellPosition = grid.LocalToCell(position);
-        obstacle.transform.localPosition = grid.CellToLocal(cellPosition);
+        obj.transform.localPosition = grid.CellToLocal(cellPosition);
     }
 
     /// <summary>
     /// Add obstacle to the container using a vector of width/height ratio
     /// </summary>
-    /// <param name="obstacle"></param>
+    /// <param name="obj"></param>
     /// <param name="posInRatio"></param>
-    public void AddObstacleUsingRatioVector(GameObject obstacle, Vector3 posInRatio)
+    public void AddObjectUsingNormalizedPosition(GameObject obj, Vector3 normPos)
     {
 
     }
@@ -175,17 +180,17 @@ public class ObstacleContainer : MonoBehaviour {
     /// Obstacles that cannot fit inside the container will be discarded
     /// </summary>
     /// <param name="obstacles"></param>
-    public void AddObstalcesToRandomPositions(List<GameObject> obstacleList)
+    public void AddObjectsToRandomPositions(List<GameObject> objList)
     {
         int discardCount = 0;
-        foreach (GameObject obstacle in obstacleList)
+        foreach (GameObject obstacle in objList)
         {
             float xPos = Random.Range(xMin, xMax);
             float yPos = Random.Range(yMin, yMax);
             Vector3 pos = new Vector3(xPos, yPos, 0);
-            if (IsObstacleWithinHorizontalBoundaries(obstacle, pos))
+            if (IsObjectWithinHorizontalBoundaries(obstacle, pos))
             {
-                AddObstacleUsingRelativePosition(obstacle, pos);
+                AddObjectUsingRelativePosition(obstacle, pos);
             }
             else
             {
@@ -197,17 +202,17 @@ public class ObstacleContainer : MonoBehaviour {
         Debug.LogWarning(discardCount + " object(s) discarded");
     }
 
-    public void AddObstalcesToRandomGridPositions(List<GameObject> obstacleList)
+    public void AddObjectsToRandomGridPositions(List<GameObject> objList)
     {
         int discardCount = 0;
-        foreach (GameObject obstacle in obstacleList)
+        foreach (GameObject obstacle in objList)
         {
             float xPos = Random.Range(xMin, xMax);
             float yPos = Random.Range(yMin, yMax);
             Vector3 pos = new Vector3(xPos, yPos, 0);
-            if (IsObstacleWithinHorizontalBoundaries(obstacle, pos))
+            if (IsObjectWithinHorizontalBoundaries(obstacle, pos))
             {
-                AddObstacleToGridUsingRelativePosition(obstacle, pos);
+                AddObjectToGridUsingRelativePosition(obstacle, pos);
             }
             else
             {
@@ -219,9 +224,9 @@ public class ObstacleContainer : MonoBehaviour {
         Debug.LogWarning(discardCount + " object(s) discarded");
     }
 
-    private bool IsObstacleWithinBoundary(GameObject obstacle, Vector3 position)
+    private bool IsObjectWithinBoundary(GameObject obj, Vector3 position)
     {
-        Vector3 scale = obstacle.transform.localScale;
+        Vector3 scale = obj.transform.localScale;
         float width = scale.x;
         float height = scale.y;
         float xPos = position.x;
@@ -235,12 +240,12 @@ public class ObstacleContainer : MonoBehaviour {
     /// Ensures that object will not appear in camera before container starts to move
     /// or be destroyed before leaving screen completely because it exceeds container boundaries
     /// </summary>
-    /// <param name="obstacle"></param>
+    /// <param name="obj"></param>
     /// <param name="position"></param>
     /// <returns></returns>
-    private bool IsObstacleWithinHorizontalBoundaries(GameObject obstacle, Vector3 position)
+    private bool IsObjectWithinHorizontalBoundaries(GameObject obj, Vector3 position)
     {
-        Vector3 scale = obstacle.transform.localScale;
+        Vector3 scale = obj.transform.localScale;
         float width = scale.x;
         float height = scale.y;
         float xPos = position.x;
