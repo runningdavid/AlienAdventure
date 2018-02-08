@@ -102,7 +102,7 @@ public class GameController : MonoBehaviour {
     {
         ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
         List<GameObject> obstacleList = new List<GameObject>();
-        for (int i = 0; i < 500; i++)
+        for (int i = 0; i < 100; i++)
         {
             GameObject obstacleObject = GetRandomObstacle();
             SetRandomColor(obstacleObject);
@@ -111,6 +111,8 @@ public class GameController : MonoBehaviour {
             //container.AddObstacleUsingRelativePosition(obstacleObject, new Vector3(i, 0, 0));
             obstacleList.Add(obstacleObject);
         }
+        
+        container.GenerateFeasiblePath(1, 2, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
 
         container.AddObjectsToRandomGridPositions(obstacleList);
 
@@ -119,9 +121,6 @@ public class GameController : MonoBehaviour {
         //GameObject bigObstacleObject = GetRandomObstacle();
         //bigObstacleObject.transform.localScale = new Vector3(9, 9, 0);
         //container.AddObjectUsingRelativePosition(bigObstacleObject, new Vector3(-5.5f, 0, 0));
-        
-        container.GenerateFeasiblePath(1, 2, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
-       
     }
 
     // TODO: must ensure there's a way through
