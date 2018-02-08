@@ -102,7 +102,7 @@ public class GameController : MonoBehaviour {
     {
         ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
         List<GameObject> obstacleList = new List<GameObject>();
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 15; i++)
         {
             GameObject obstacleObject = GetRandomObstacle();
             SetRandomColor(obstacleObject);
@@ -111,10 +111,11 @@ public class GameController : MonoBehaviour {
             //container.AddObstacleUsingRelativePosition(obstacleObject, new Vector3(i, 0, 0));
             obstacleList.Add(obstacleObject);
         }
-        
-        container.GenerateFeasiblePath(1, 2, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
 
-        container.AddObjectsToRandomGridPositions(obstacleList);
+        //container.GenerateFeasiblePath(1, 1, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
+        container.ScanAndAddObjectsToRandomGridPositions(obstacleList);
+
+        //container.AddObjectsToRandomGridPositions(obstacleList);
 
         // TODO: test handling big objects, they should not be intentionally be placed outside of container,
         // container should throw an error in that case

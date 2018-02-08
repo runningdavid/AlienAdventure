@@ -234,6 +234,9 @@ public class ObstacleContainer : MonoBehaviour {
             {
                 //occupiedCellPositions.Add(HashVector3Int(cellPosition));
                 AddObjectUsingRelativePosition(obstacle, localPosition);
+
+                // TODO: add object to used list
+                OccupyGridPosition(obstacle, localPosition);
             }
             else
             {
@@ -243,6 +246,34 @@ public class ObstacleContainer : MonoBehaviour {
 
         }
         Debug.LogWarning(discardCount + " object(s) discarded");
+    }
+
+    public void ScanAndAddObjectsToRandomGridPositions(List<GameObject> objList)
+    {
+        int xMinCell = containerGrid.LocalToCell(new Vector3(localXMin, 0, 0)).x;
+        int xMaxCell = containerGrid.LocalToCell(new Vector3(localXMax, 0, 0)).x;
+        int yMinCell = containerGrid.LocalToCell(new Vector3(0, localYMin, 0)).y;
+        int yMaxCell = containerGrid.LocalToCell(new Vector3(0, localYMax, 0)).y;
+
+        float probability = 1.00f;
+
+        for (int i = xMinCell; i <= xMaxCell; i++)
+        {
+            for (int j = yMinCell; j <= yMaxCell; j++)
+            {
+                if (Random.Range(0.00f, 1.00f) <= probability && IsObjectWithinHorizontalBoundaries(objList.Last(), containerGrid.CellToLocal(new Vector3Int(i, j, 0))) && !WillObjectOverlapWithOccupiedPositions(objList.Last(), containerGrid.CellToLocal(new Vector3Int(i, j, 0))))
+                {
+                    AddObjectToGridUsingCellPosition(objList.Last(), new Vector3Int(i, j, 0));
+                    OccupyGridPosition(objList.Last(), containerGrid.CellToLocal(new Vector3Int(i, j, 0)));
+                    objList.RemoveAt(objList.Count - 1);
+                }
+            }
+        }
+
+        foreach (GameObject obj in objList)
+        {
+            Destroy(obj);
+        }
     }
 
     /// <summary>
@@ -357,14 +388,36 @@ public class ObstacleContainer : MonoBehaviour {
                 {
                     return true;
                 }
-                occupiedCellPositions.Add(HashVector3Int(new Vector3Int(i, j, 0)));
             }
         }
 
         return false;
     }
 
-    public static int HashVector3Int(Vector3Int vec)
+    private void OccupyGridPosition(GameObject obj, Vector3 position)
+    {
+        Vector3 scale = obj.transform.localScale;
+        float width = scale.x;
+        float height = scale.y;
+        float xPos = position.x;
+        float yPos = position.y;
+
+        int xMinCell = containerGrid.LocalToCell(new Vector3(xPos - width / 2, 0, 0)).x;
+        int xMaxCell = containerGrid.LocalToCell(new Vector3(xPos + width / 2, 0, 0)).x;
+        int yMinCell = containerGrid.LocalToCell(new Vector3(0, yPos - height / 2, 0)).y;
+        int yMaxCell = containerGrid.LocalToCell(new Vector3(0, yPos + height / 2, 0)).y;
+
+        for (int i = xMinCell; i <= xMaxCell; i++)
+        {
+            for (int j = yMinCell; j <= yMaxCell; j++)
+            {
+                occupiedCellPositions.Add(HashVector3Int(new Vector3Int(i, j, 0)));
+            }
+        }
+
+    }
+
+    private static int HashVector3Int(Vector3Int vec)
     {
         return vec.x * 1000 + vec.z + vec.y * 1000000;
     }
