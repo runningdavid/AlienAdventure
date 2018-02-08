@@ -119,7 +119,7 @@ public class GameController : MonoBehaviour {
         bigObstacleObject.transform.localScale = new Vector3(9, 9, 0);
         container.AddObjectUsingRelativePosition(bigObstacleObject, new Vector3(-5.5f, 0, 0));
         
-        container.GenerateFeasiblePath(1, 2, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
+        container.GenerateFeasiblePath(2, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
        
     }
 

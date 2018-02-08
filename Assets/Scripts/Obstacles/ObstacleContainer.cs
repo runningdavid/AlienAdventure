@@ -248,8 +248,8 @@ public class ObstacleContainer : MonoBehaviour {
     /// </summary>
     /// <param name="localInitialPosition"></param>
     /// <param name="pathWidth"></param>
-    /// <param name="variation"></param>
-    public void GenerateFeasiblePath(int pathWidth, int variation, GameObject lastContainerObject)
+    /// <param name="variation">The more variation the difficult it gets</param>
+    public void GenerateFeasiblePath(int variation, GameObject lastContainerObject)
     {
         float initXCellPos = containerGrid.WorldToLocal(new Vector3(player.transform.position.x, 0, 0)).x;
         Vector3Int beginCell = containerGrid.LocalToCell(new Vector3(initXCellPos, localYMin, 0));
