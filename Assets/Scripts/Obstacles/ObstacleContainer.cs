@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ObstacleContainer : MonoBehaviour {
@@ -26,6 +27,12 @@ public class ObstacleContainer : MonoBehaviour {
     public float leastVerticalGap = 0;
 
     public float leastHorizontalGap = 0;
+    
+    [Tooltip("INTERNAL ONLY: should we visualize the generated path")]
+    public bool shouldVisualizePath = false;
+
+    [Tooltip("INTERNAL ONLY: prefab used to visualize the generated path")]
+    public GameObject pathCellPrefab;
 
     public bool IsTripEnded
     {
@@ -36,26 +43,39 @@ public class ObstacleContainer : MonoBehaviour {
     }
 
     public bool IsReady { get; set; }
+    
+    public float localXMin;
+    public float localXMax;
+    public float localYMin;
+    public float localYMax;
+
+    public float worldXMin;
+    public float worldXMax;
+    public float worldYMin;
+    public float worldYMax;
 
     // TODO: might have to use a grid system to handle object overlapping
-    private Grid grid;
-
+    private Grid containerGrid;
+    private List<Vector3> feasiblePathLocalPositionList;
+    private GameObject player;
     private bool isMoving = false;
 
-    private float xMin;
-    private float xMax;
-    private float yMin;
-    private float yMax;
-    
     // Use this for initialization
     private void Start()
     {
-        xMin = -width / 2;
-        xMax = width / 2;
-        yMin = -height / 2;
-        yMax = height / 2;
+        localXMin = -width / 2;
+        localXMax = width / 2;
+        localYMin = -height / 2;
+        localYMax = height / 2;
 
-        grid = GetComponent<Grid>();
+        worldXMin = transform.position.x + localXMin;
+        worldXMax = transform.position.x + localXMax;
+        worldYMin = transform.position.y + localYMin;
+        worldYMax = transform.position.y + localYMax;
+
+        containerGrid = GetComponent<Grid>();
+        feasiblePathLocalPositionList = new List<Vector3>();
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -105,8 +125,8 @@ public class ObstacleContainer : MonoBehaviour {
         }
 
         IsReady = false;
-
         transform.position = originalPosition;
+        feasiblePathLocalPositionList = new List<Vector3>();
     }
 
     public void SetSpeed(float speed)
@@ -146,25 +166,7 @@ public class ObstacleContainer : MonoBehaviour {
         obj.transform.parent = transform;
         obj.transform.localPosition = position;
     }
-
-    /// <summary>
-    /// Converts relative vector position to nearest cell and add obstacle to that cell in the grid
-    /// </summary>
-    /// <param name="obj"></param>
-    /// <param name="position"></param>
-    public void AddObjectToGridUsingRelativePosition(GameObject obj, Vector3 position)
-    {
-        if (position.x < transform.position.x - width / 2 || position.x > transform.position.x + width / 2
-            || position.y < transform.position.y - height / 2 || position.y > transform.position.y + height / 2)
-        {
-            Debug.LogWarning("Object pivot exceeds container boundary");
-        }
-
-        obj.transform.parent = transform;
-        Vector3Int cellPosition = grid.LocalToCell(position);
-        obj.transform.localPosition = grid.CellToLocal(cellPosition);
-    }
-
+    
     /// <summary>
     /// Add obstacle to the container using a vector of width/height ratio
     /// </summary>
@@ -176,6 +178,17 @@ public class ObstacleContainer : MonoBehaviour {
     }
     
     /// <summary>
+    /// Add object to container grid using cell position
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="cellPosition"></param>
+    public void AddObjectToGridUsingCellPosition(GameObject obj, Vector3Int cellPosition)
+    {
+        obj.transform.parent = transform;
+        obj.transform.localPosition = containerGrid.CellToLocal(cellPosition);
+    }
+
+    /// <summary>
     /// Add obstacles to the container, ensures that there will always be a path through using restricting gap variables
     /// Obstacles that cannot fit inside the container will be discarded
     /// </summary>
@@ -185,8 +198,8 @@ public class ObstacleContainer : MonoBehaviour {
         int discardCount = 0;
         foreach (GameObject obstacle in objList)
         {
-            float xPos = Random.Range(xMin, xMax);
-            float yPos = Random.Range(yMin, yMax);
+            float xPos = Random.Range(localXMin, localXMax);
+            float yPos = Random.Range(localYMin, localYMax);
             Vector3 pos = new Vector3(xPos, yPos, 0);
             if (IsObjectWithinHorizontalBoundaries(obstacle, pos))
             {
@@ -207,12 +220,15 @@ public class ObstacleContainer : MonoBehaviour {
         int discardCount = 0;
         foreach (GameObject obstacle in objList)
         {
-            float xPos = Random.Range(xMin, xMax);
-            float yPos = Random.Range(yMin, yMax);
+            float xPos = Random.Range(localXMin, localXMax);
+            float yPos = Random.Range(localYMin, localYMax);
             Vector3 pos = new Vector3(xPos, yPos, 0);
-            if (IsObjectWithinHorizontalBoundaries(obstacle, pos))
+            // convert to grid units and get that cell position in local units before checking!
+            Vector3Int cellPosition = containerGrid.LocalToCell(pos);
+            Vector3 gridPosition = containerGrid.CellToLocal(cellPosition);
+            if (IsObjectWithinHorizontalBoundaries(obstacle, gridPosition))
             {
-                AddObjectToGridUsingRelativePosition(obstacle, pos);
+                AddObjectUsingRelativePosition(obstacle, gridPosition);
             }
             else
             {
@@ -224,6 +240,51 @@ public class ObstacleContainer : MonoBehaviour {
         Debug.LogWarning(discardCount + " object(s) discarded");
     }
 
+    /// <summary>
+    /// Generate random path from bottom to top which cannot have obstacles overlapped with
+    /// This ensures there's always a way out for each container (no impossible plays)
+    /// 
+    /// Caller of this method should pass in a local initial position and ensure that path is continuous
+    /// </summary>
+    /// <param name="localInitialPosition"></param>
+    /// <param name="pathWidth"></param>
+    /// <param name="variation"></param>
+    public void GenerateFeasiblePath(int pathWidth, int variation, GameObject lastContainerObject)
+    {
+        float initXCellPos = containerGrid.WorldToLocal(new Vector3(player.transform.position.x, 0, 0)).x;
+        Vector3Int beginCell = containerGrid.LocalToCell(new Vector3(initXCellPos, localYMin, 0));
+        if (lastContainerObject != null)
+        {
+            ObstacleContainer lastContainer = lastContainerObject.GetComponent<ObstacleContainer>();
+            beginCell = containerGrid.LocalToCell(new Vector3(lastContainer.feasiblePathLocalPositionList.Last().x, localYMin, 0));
+        }
+
+        int beginCellYPos = beginCell.y;
+        int endCellYPos = containerGrid.LocalToCell(new Vector3(0, localYMax, 0)).y;
+        int cellMinXPos = containerGrid.LocalToCell(new Vector3(transform.position.x - width / 2, 0, 0)).x;
+        int cellMaxXPos = containerGrid.LocalToCell(new Vector3(transform.position.x + width / 2, 0, 0)).x;
+
+        int previousCellXPos = beginCell.x;
+        for (int currentCellYPos = beginCellYPos; currentCellYPos <= endCellYPos; currentCellYPos++)
+        {
+            int currentXMin = previousCellXPos - variation < cellMinXPos ? previousCellXPos : previousCellXPos - variation;
+            int currentXMax = previousCellXPos + variation > cellMaxXPos ? previousCellXPos : previousCellXPos + variation;
+            int currentCellXPos = Random.Range(currentXMin, currentXMax + 1);
+            Vector3Int currentCell = new Vector3Int(currentCellXPos, currentCellYPos, 0);
+            feasiblePathLocalPositionList.Add(containerGrid.CellToLocal(currentCell));
+            previousCellXPos = currentCellXPos;
+        }
+
+        if (shouldVisualizePath)
+        {
+            foreach (Vector3 position in feasiblePathLocalPositionList)
+            {
+                GameObject pathIndicator = Instantiate(pathCellPrefab, transform.position, Quaternion.identity);
+                AddObjectUsingRelativePosition(pathIndicator, position);
+            }
+        }
+    }
+
     private bool IsObjectWithinBoundary(GameObject obj, Vector3 position)
     {
         Vector3 scale = obj.transform.localScale;
@@ -232,8 +293,8 @@ public class ObstacleContainer : MonoBehaviour {
         float xPos = position.x;
         float yPos = position.y;
 
-        return xPos - (width / 2) >= xMin && xPos + (width / 2) <= xMax
-            && yPos - (height / 2) >= yMin && yPos + (height / 2) <= yMax;
+        return xPos - (width / 2) >= localXMin && xPos + (width / 2) <= localXMax
+            && yPos - (height / 2) >= localYMin && yPos + (height / 2) <= localYMax;
     }
 
     /// <summary>
@@ -251,6 +312,6 @@ public class ObstacleContainer : MonoBehaviour {
         float xPos = position.x;
         float yPos = position.y;
 
-        return yPos - (height / 2) >= yMin && yPos + (height / 2) <= yMax;
+        return yPos - (height / 2) >= localYMin && yPos + (height / 2) <= localYMax;
     }
 }

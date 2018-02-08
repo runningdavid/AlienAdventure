@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour {
         ObstacleContainer firstContainer = firstContainerObject.GetComponent<ObstacleContainer>();
         if (!firstContainer.IsReady)
         {
-            GenerateFixedLayout(firstContainerObject);
+            GenerateLayout(firstContainerObject);
             firstContainer.IsReady = true;
         }
 
@@ -98,7 +98,7 @@ public class GameController : MonoBehaviour {
 
     }
 
-    private void GenerateFixedLayout(GameObject containerObject)
+    private void GenerateLayout(GameObject containerObject)
     {
         ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
         List<GameObject> obstacleList = new List<GameObject>();
@@ -118,6 +118,9 @@ public class GameController : MonoBehaviour {
         GameObject bigObstacleObject = GetRandomObstacle();
         bigObstacleObject.transform.localScale = new Vector3(9, 9, 0);
         container.AddObjectUsingRelativePosition(bigObstacleObject, new Vector3(-5.5f, 0, 0));
+        
+        container.GenerateFeasiblePath(1, 2, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
+       
     }
 
     // TODO: must ensure there's a way through

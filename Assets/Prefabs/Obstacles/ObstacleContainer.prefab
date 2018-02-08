@@ -47,6 +47,9 @@ MonoBehaviour:
   endingPosition: {x: 0, y: 0, z: 0}
   leastVerticalGap: 0
   leastHorizontalGap: 0
+  shouldVisualizePath: 1
+  pathCellPrefab: {fileID: 1297619939885110, guid: 43d2a798a3aed3742ad2a78cf1868fcd,
+    type: 2}
 --- !u!224 &224165540184982234
 RectTransform:
   m_ObjectHideFlags: 1
