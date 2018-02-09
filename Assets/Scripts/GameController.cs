@@ -4,56 +4,52 @@ using System.Linq;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
+    
+    [Tooltip("Number of sliders being used by the game (must > numMovingSliders)")]
+    public int totalSliders = 2;
 
-    [Tooltip("Prefab array for obstacles")]
-    public GameObject[] obstaclePrefabArray;
+    [Tooltip("Number of sliders allowed to move at the same time")]
+    public int maxMovingSliders = 1;
 
-    [Tooltip("Number of container being used by the game (must be greater than max containers moving at the same time)")]
-    public int containerCount = 2;
-
-    [Tooltip("Number of containers allowed to move at the same time")]
-    public int maxContainersInProgress = 1;
-
-    public GameObject obstacleContainerPrefab;
-
-    private int prefabCount;
-    private Queue<GameObject> containerQueue;
-    private List<GameObject> InProgressContainerList;
-
-    private Vector3 screenBottomLeftPos;
-    private Vector3 screenUpperRightPos;
+    [Tooltip("Prefab for sliders that will contain obstalces")]
+    public GameObject sliderPrefab;
+    
+    private Queue<GameObject> sliderQueue;
+    private List<GameObject> movingSlidersList;
+    private Dictionary<GameObject, bool> sliderReadyStates;
+    private Vector3 screenBottomLeftWorldPos;
+    private Vector3 screenTopRightWorldPos;
 
     // Use this for initialization
     private void Start()
     {
         // initialize data structures
-        prefabCount = obstaclePrefabArray.Length;
-        containerQueue = new Queue<GameObject>();
-        InProgressContainerList = new List<GameObject>();
+        sliderQueue = new Queue<GameObject>();
+        movingSlidersList = new List<GameObject>();
+        sliderReadyStates = new Dictionary<GameObject, bool>();
 
         // calculate screen size in world point units
         float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
-        screenBottomLeftPos = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distanceToCamera));
-        screenUpperRightPos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distanceToCamera));
+        screenBottomLeftWorldPos = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distanceToCamera));
+        screenTopRightWorldPos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distanceToCamera));
 
-        // initialize containers' container
-        GameObject containerCollection = GameObject.Find("ContainerCollection");
-        if (containerCollection == null)
+        // initialize the slider holder
+        GameObject sliderHolder = GameObject.Find("SliderHolder");
+        if (sliderHolder == null)
         {
-            containerCollection = new GameObject("ContainerCollection");
+            sliderHolder = new GameObject("SliderHolder");
         }
-        containerCollection.transform.position = new Vector3(0, 0, 0);
 
-        // initialize container
-        for (int i = 0; i < containerCount; i++)
+        // initialize slider object using its prefab
+        // by default a slider comes with a grid to ease position of obstacles
+        for (int i = 0; i < totalSliders; i++)
         {
-            // containerObject will contain a grid
-            GameObject containerObject = Instantiate(obstacleContainerPrefab, containerCollection.transform);
-            ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
-            container.originalPosition = new Vector3(0, screenUpperRightPos.y + container.height / 2);
-            container.endingPosition = new Vector3(0, screenBottomLeftPos.y - container.height / 2);
-            container.Reset();
-            containerQueue.Enqueue(containerObject);
+            GameObject sliderObject = Instantiate(sliderPrefab, sliderHolder.transform);
+            Slider slider = sliderObject.GetComponent<Slider>();
+            PutSliderAtBeginPos(sliderObject);
+            slider.Reset();
+            sliderQueue.Enqueue(sliderObject);
+            sliderReadyStates.Add(sliderObject, false);
         }
 
     }
@@ -62,120 +58,61 @@ public class GameController : MonoBehaviour {
     private void Update()
     {
         // initialize next container
-        GameObject firstContainerObject = containerQueue.Peek();
-        ObstacleContainer firstContainer = firstContainerObject.GetComponent<ObstacleContainer>();
-        if (!firstContainer.IsReady)
+        GameObject firstSliderObject = sliderQueue.Peek();
+        if (!sliderReadyStates[firstSliderObject])
         {
-            GenerateLayout(firstContainerObject);
-            firstContainer.IsReady = true;
+            Slider firstSlider = firstSliderObject.GetComponent<Slider>();
+            firstSlider.GenerateObstacles();
+            sliderReadyStates[firstSliderObject] = true;
         }
-
-
+        
         // update in progress containers
-        if (InProgressContainerList.Count < maxContainersInProgress)
+        if (movingSlidersList.Count < maxMovingSliders)
         {
-            if (InProgressContainerList.Count == 0 || HasContainerCompletelyLeft(InProgressContainerList.Last()))
+            if (movingSlidersList.Count == 0 || HasSliderTopEnteredScreen(movingSlidersList.Last()))
             {
-                GameObject availableContainer = containerQueue.Dequeue();
-                availableContainer.GetComponent<ObstacleContainer>().StartMoving();
-                InProgressContainerList.Add(availableContainer);
+                GameObject nextSliderObject = sliderQueue.Dequeue();
+                Slider nextSlider = nextSliderObject.GetComponent<Slider>();
+                nextSlider.StartMoving();
+                movingSlidersList.Add(nextSliderObject);
             }            
         }
 
         // recycle used containers
-        for (int i = InProgressContainerList.Count - 1; i >= 0; i--)
+        for (int i = movingSlidersList.Count - 1; i >= 0; i--)
         {
-            GameObject containerObject = InProgressContainerList[i];
-            ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
-            if (container.IsTripEnded)
+            GameObject sliderObject = movingSlidersList[i];
+            Slider slider = sliderObject.GetComponent<Slider>();
+            if (HasSliderReachedEnd(sliderObject))
             {
-                container.StopMoving();
-                container.Reset();
-                InProgressContainerList.RemoveAt(i);
-                containerQueue.Enqueue(containerObject);
+                slider.StopMoving();
+                slider.Reset();
+                PutSliderAtBeginPos(sliderObject);
+                movingSlidersList.RemoveAt(i);
+                sliderQueue.Enqueue(sliderObject);
+                sliderReadyStates[sliderObject] = false;
             }
         }
 
     }
 
-    private void GenerateLayout(GameObject containerObject)
+    private void PutSliderAtBeginPos(GameObject sliderObject)
     {
-        ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
-        List<GameObject> obstacleList = new List<GameObject>();
-        for (int i = 0; i < 15; i++)
-        {
-            GameObject obstacleObject = GetRandomObstacle();
-            SetRandomColor(obstacleObject);
-            SetRandomScale(obstacleObject, 1.00f, 6.00f);
-            SetRandomRotation(obstacleObject);
-            //container.AddObstacleUsingRelativePosition(obstacleObject, new Vector3(i, 0, 0));
-            obstacleList.Add(obstacleObject);
-        }
-
-        //container.GenerateFeasiblePath(1, 1, InProgressContainerList.Count > 0 ? InProgressContainerList.Last() : null);
-        container.ScanAndAddObjectsToRandomGridPositions(obstacleList);
-
-        //container.AddObjectsToRandomGridPositions(obstacleList);
-
-        // TODO: test handling big objects, they should not be intentionally be placed outside of container,
-        // container should throw an error in that case
-        //GameObject bigObstacleObject = GetRandomObstacle();
-        //bigObstacleObject.transform.localScale = new Vector3(9, 9, 0);
-        //container.AddObjectUsingRelativePosition(bigObstacleObject, new Vector3(-5.5f, 0, 0));
+        Slider slider = sliderObject.GetComponent<Slider>();
+        sliderObject.transform.position = new Vector3(0, screenTopRightWorldPos.y + slider.height / 2, 0);
     }
 
-    // TODO: must ensure there's a way through
-    // TODO: must generate multiple rows and columns
-    // TODO: Bigger objects might rotate at a slower speed
-    private void GenerateRandomLayout(GameObject containerObject, int diffLevel)
+    private bool HasSliderReachedEnd(GameObject sliderObject)
     {
-        
+        Slider slider = sliderObject.GetComponent<Slider>();
+        return sliderObject.transform.position.y <= screenBottomLeftWorldPos.y - slider.height / 2;
     }
 
-    private GameObject GetRandomObstacle()
+    private bool HasSliderTopEnteredScreen(GameObject sliderObject)
     {
-        int index = Random.Range(0, prefabCount);
-        GameObject prefab = obstaclePrefabArray[index];
-        if (prefab == null)
-        {
-            Debug.LogError("Spawn obstacle failed");
-        }
-        GameObject obstacle = Instantiate(prefab);
-        return obstacle;
+        Slider slider = sliderObject.GetComponent<Slider>();
+        return sliderObject.transform.position.y + slider.height / 2 <= screenTopRightWorldPos.y;
     }
 
-    private bool HasContainerCompletelyLeft(GameObject containerObject)
-    {
-        ObstacleContainer container = containerObject.GetComponent<ObstacleContainer>();
-        return containerObject.transform.position.y + container.height / 2 <= screenUpperRightPos.y;
-    }
 
-    private void SetRandomColor(GameObject obstacleObject)
-    {
-        obstacleObject.GetComponentInChildren<SpriteRenderer>().color = Random.ColorHSV();
-    }
-
-    private void SetRandomScale(GameObject obstacleObject, float min, float max)
-    {
-        float rand = Random.Range(min, max);
-        SetScale(obstacleObject, new Vector3(rand, rand, 1));
-    }
-
-    private void SetScale(GameObject obstacleObject, Vector3 scale)
-    {
-        obstacleObject.transform.localScale = scale;
-    }
-
-    private void SetRandomRotation(GameObject obstacleObject)
-    {
-        float xAngle = Random.Range(0, 30);
-        float yAngle = Random.Range(0, 15);
-        float zAngle = Random.Range(0, 359);
-        obstacleObject.transform.Rotate(new Vector3(xAngle, yAngle, zAngle));
-    }
-
-    private void SetParent(GameObject child, GameObject parent)
-    {
-        child.transform.parent = parent.transform;
-    }
 }

@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour {
     [Tooltip("Padding of player object relative to the horizontal boundary")]
     public float yPadding = 0.5f;
 
+    public LevelManager levelManager;
+
+    public bool IsInvinsible = false;
+
     private float xMin;
     private float xMax;
     private float yMin;
@@ -50,7 +54,12 @@ public class PlayerController : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("You've collided with an obstacle");
-        
+
         // TODO: handle lose condition
+        if (!IsInvinsible)
+        {
+            levelManager.LoadLevel("Lose");
+        }
+        
     }
 }

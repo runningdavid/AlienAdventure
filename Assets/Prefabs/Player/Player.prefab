@@ -134,6 +134,8 @@ MonoBehaviour:
   playerSpeed: 0
   xPadding: 0.5
   yPadding: 0.5
+  levelManager: {fileID: 114131346817735498, guid: 90bad89e908759047ac80899e99390c8,
+    type: 2}
 --- !u!212 &212765602367248982
 SpriteRenderer:
   m_ObjectHideFlags: 1

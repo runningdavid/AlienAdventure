@@ -152,15 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0adaf203dfa14ec4fb3047ebf86f2643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstaclePrefabArray:
-  - {fileID: 1377588612034744, guid: 866f85f068573e7438af931dd29fc157, type: 2}
-  - {fileID: 1774597779264104, guid: dc10d290635506043aa45eba1f7affc8, type: 2}
-  - {fileID: 1488981009819708, guid: 67b96c9d91235c245a6de8216dc80324, type: 2}
-  - {fileID: 1583339156582410, guid: fbb25764d99d85948a784b6f0524ab4d, type: 2}
-  - {fileID: 1614045225632160, guid: 62ad7732103357c49a16b1826ad328a4, type: 2}
-  containerCount: 3
-  maxContainersInProgress: 2
-  obstacleContainerPrefab: {fileID: 1677428335223064, guid: 6c939721fa4085f468051a4f3b213ad3,
+  totalSliders: 3
+  maxMovingSliders: 2
+  sliderPrefab: {fileID: 1677428335223064, guid: 6c939721fa4085f468051a4f3b213ad3,
     type: 2}
 --- !u!1 &337584533
 GameObject:
@@ -171,7 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 337584534}
   m_Layer: 0
-  m_Name: ContainerCollection
+  m_Name: SliderHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -294,6 +288,11 @@ Prefab:
     - target: {fileID: 1599293166830798, guid: 7a83a53a3178dca4d9de2cb939e6cac3, type: 2}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 114620568126394478, guid: 7a83a53a3178dca4d9de2cb939e6cac3,
+        type: 2}
+      propertyPath: IsInvinsible
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a83a53a3178dca4d9de2cb939e6cac3, type: 2}

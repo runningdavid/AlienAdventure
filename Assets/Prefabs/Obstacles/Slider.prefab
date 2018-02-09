@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 2569400267269507342}
   - component: {fileID: 114509140330970246}
   m_Layer: 0
-  m_Name: ObstacleContainer
+  m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,25 +39,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d335819f7920a4690385f086db4e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstaclePrefabArray:
+  - {fileID: 1377588612034744, guid: 866f85f068573e7438af931dd29fc157, type: 2}
+  - {fileID: 1774597779264104, guid: dc10d290635506043aa45eba1f7affc8, type: 2}
+  - {fileID: 1488981009819708, guid: 67b96c9d91235c245a6de8216dc80324, type: 2}
+  - {fileID: 1583339156582410, guid: fbb25764d99d85948a784b6f0524ab4d, type: 2}
+  - {fileID: 1614045225632160, guid: 62ad7732103357c49a16b1826ad328a4, type: 2}
   translate: {x: 0, y: -1, z: 0}
   speed: 5
   width: 9
   height: 16
-  originalPosition: {x: 0, y: 0, z: 0}
-  endingPosition: {x: 0, y: 0, z: 0}
-  leastVerticalGap: 0
-  leastHorizontalGap: 0
-  shouldVisualizePath: 0
-  pathCellPrefab: {fileID: 1297619939885110, guid: 43d2a798a3aed3742ad2a78cf1868fcd,
-    type: 2}
-  localXMin: 0
-  localXMax: 0
-  localYMin: 0
-  localYMax: 0
-  worldXMin: 0
-  worldXMax: 0
-  worldYMin: 0
-  worldYMax: 0
 --- !u!224 &224165540184982234
 RectTransform:
   m_ObjectHideFlags: 1
