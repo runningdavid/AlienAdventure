@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class Player : MonoBehaviour {
 
     public Vector3 playerTranslate = Vector3.up;
     public float playerSpeed = 0;
