@@ -57,7 +57,6 @@ public class Slider : MonoBehaviour {
     // TODO: might have to use a grid system to handle object overlapping
     private Grid sliderGrid;
     private HashSet<int> occupiedCells;
-    private GameObject player;
     private bool isMoving = false;
 
     private Vector3Int TopRightCellPos
@@ -84,9 +83,6 @@ public class Slider : MonoBehaviour {
 
         // initialize grid mask
         occupiedCells = new HashSet<int>();
-
-        // TODO: get player object (can we use public field for player??)
-        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame

@@ -292,7 +292,7 @@ Prefab:
     - target: {fileID: 114620568126394478, guid: 7a83a53a3178dca4d9de2cb939e6cac3,
         type: 2}
       propertyPath: IsInvinsible
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a83a53a3178dca4d9de2cb939e6cac3, type: 2}

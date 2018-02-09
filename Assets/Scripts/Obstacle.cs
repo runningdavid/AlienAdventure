@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleProperty : MonoBehaviour {
+public class Obstacle : MonoBehaviour {
 
-    [Tooltip("Maximum width the object can span (can be rotated)")]
-    public float maxWidth;
-
-    private float widthWithinScreen;
+    public Vector3 rotationSpeed = new Vector3(0, 0, 0);
 
     // Use this for initialization
     private void Start()
@@ -18,6 +15,6 @@ public class ObstacleProperty : MonoBehaviour {
     // Update is called once per frame
     private void Update()
     {
-        
+        transform.Rotate(new Vector3(Time.deltaTime * rotationSpeed.x, Time.deltaTime * rotationSpeed.y, Time.deltaTime * rotationSpeed.z));
     }
 }
