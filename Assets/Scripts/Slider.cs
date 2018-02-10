@@ -175,13 +175,14 @@ public class Slider : MonoBehaviour {
     /// <param name="objList"></param>
     public void GenerateObstacles()
     {
-        float probability = 0.03f;
+        float generationProbability = 0.03f;
+        float rotationProbability = 0.5f;
 
         for (int i = BottomLeftCellPos.x; i <= TopRightCellPos.x; i++)
         {
             for (int j = BottomLeftCellPos.y; j <= TopRightCellPos.y; j++)
             {
-                if (Random.Range(0.00f, 1.00f) <= probability)
+                if (Random.Range(0.00f, 1.00f) <= generationProbability)
                 {
                     GameObject obstacleObject = GetRandomObstacle();
                     SetRandomColor(obstacleObject);
@@ -195,6 +196,16 @@ public class Slider : MonoBehaviour {
                     {
                         // object is already there, no need to add again
                         MarkOccupied(obstacleObject);
+                        
+                        // TODO: experiment with obstacle spinning, but when spinning it might exceed horizontal position again
+                        // need to use bounds to calculate maximum possible object width
+                        if (Random.Range(0.00f, 1.00f) <= rotationProbability)
+                        {
+                            float xSpeed = Random.Range(-10.00f, 10.00f);
+                            float ySpeed = 0;
+                            float zSpeed = Random.Range(-50.00f, 50.00f);
+                            obstacleObject.GetComponent<Obstacle>().StartSpinning(new Vector3(xSpeed, ySpeed, zSpeed));
+                        }
                     }
                     else
                     {
