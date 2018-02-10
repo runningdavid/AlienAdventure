@@ -5,10 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public Vector3 playerTranslate = Vector3.up;
+
     public float playerSpeed = 0;
 
     [Tooltip("Padding of player object relative to the vertical boundary")]
     public float xPadding = 0.5f;
+
     [Tooltip("Padding of player object relative to the horizontal boundary")]
     public float yPadding = 0.5f;
 

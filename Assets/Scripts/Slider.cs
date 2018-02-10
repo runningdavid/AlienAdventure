@@ -12,7 +12,7 @@ public class Slider : MonoBehaviour {
     public Vector3 translate = Vector3.down;
 
     [Tooltip("Moving speed of current container")]
-    public float speed = 5.00f;
+    public float speed = 3.00f;
     
     [Tooltip("Slider width")]
     public float width = 9.00f;
@@ -185,9 +185,10 @@ public class Slider : MonoBehaviour {
                 if (Random.Range(0.00f, 1.00f) <= generationProbability)
                 {
                     GameObject obstacleObject = GetRandomObstacle();
-                    SetRandomColor(obstacleObject);
-                    SetRandomScale(obstacleObject, 1.00f, 6.00f);
-                    SetRandomRotation(obstacleObject);
+                    Obstacle obstacle = obstacleObject.GetComponent<Obstacle>();
+                    obstacle.SetRandomColor();
+                    obstacle.SetRandomScale(1.00f, 10.00f);
+                    obstacle.SetRandomRotation();
 
                     Vector3Int cellPos = new Vector3Int(i, j, 0);
                     obstacleObject.transform.localPosition = sliderGrid.CellToLocal(cellPos);
@@ -216,9 +217,7 @@ public class Slider : MonoBehaviour {
             }
         }
     }
-
-    #region Obstacle Generation
-
+    
     private GameObject GetRandomObstacle()
     {
         int index = Random.Range(0, obstaclePrefabArray.Length);
@@ -227,35 +226,10 @@ public class Slider : MonoBehaviour {
         {
             Debug.LogError("Failed to get obstacle prefab");
         }
-        GameObject obstacle = Instantiate(prefab, transform);
+        GameObject obstacle = Instantiate(prefab, transform.position, Quaternion.identity);
+        obstacle.transform.parent = transform;
         return obstacle;
     }
-
-    private void SetRandomColor(GameObject obstacleObject)
-    {
-        obstacleObject.GetComponentInChildren<SpriteRenderer>().color = Random.ColorHSV();
-    }
-
-    private void SetRandomScale(GameObject obstacleObject, float min, float max)
-    {
-        float rand = Random.Range(min, max);
-        SetObjectScale(obstacleObject, new Vector3(rand, rand, 1));
-    }
-
-    private void SetObjectScale(GameObject obstacleObject, Vector3 scale)
-    {
-        obstacleObject.transform.localScale = scale;
-    }
-
-    private void SetRandomRotation(GameObject obstacleObject)
-    {
-        float xAngle = Random.Range(0, 30);
-        float yAngle = Random.Range(0, 30);
-        float zAngle = Random.Range(0, 359);
-        obstacleObject.transform.Rotate(new Vector3(xAngle, yAngle, zAngle));
-    }
-
-    #endregion
 
     /// <summary>
     /// Checks if object is within boundaries

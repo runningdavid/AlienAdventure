@@ -46,7 +46,7 @@ MonoBehaviour:
   - {fileID: 1583339156582410, guid: fbb25764d99d85948a784b6f0524ab4d, type: 2}
   - {fileID: 1614045225632160, guid: 62ad7732103357c49a16b1826ad328a4, type: 2}
   translate: {x: 0, y: -1, z: 0}
-  speed: 5
+  speed: 3
   width: 9
   height: 16
 --- !u!224 &224165540184982234

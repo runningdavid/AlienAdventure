@@ -207,6 +207,7 @@ MonoBehaviour:
   yPadding: 0.5
   levelManager: {fileID: 114131346817735498, guid: 90bad89e908759047ac80899e99390c8,
     type: 2}
+  IsInvinsible: 1
 --- !u!198 &198021398988049742
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3611,7 +3612,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6d51c64ca21ecac4dadb966d710f0b5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

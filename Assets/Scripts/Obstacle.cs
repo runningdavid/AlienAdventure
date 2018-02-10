@@ -39,4 +39,29 @@ public class Obstacle : MonoBehaviour {
     {
         shouldRotate = false;
     }
+    
+    public void SetRandomColor()
+    {
+        transform.GetComponentInChildren<SpriteRenderer>().color = Random.ColorHSV(0, 1.00f, 0, 1.00f, 0.90f, 1.00f);
+    }
+
+    public void SetRandomScale(float min, float max)
+    {
+        float rand = Random.Range(min, max);
+        SetObjectScale(new Vector3(rand, rand, 1));
+    }
+
+    public void SetObjectScale(Vector3 scale)
+    {
+        transform.localScale = scale;
+    }
+
+    public void SetRandomRotation()
+    {
+        float xAngle = Random.Range(0, 30);
+        float yAngle = Random.Range(0, 30);
+        float zAngle = Random.Range(0, 359);
+        transform.Rotate(new Vector3(xAngle, yAngle, zAngle));
+    }
+
 }
