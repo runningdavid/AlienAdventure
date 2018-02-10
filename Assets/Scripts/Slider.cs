@@ -20,6 +20,12 @@ public class Slider : MonoBehaviour {
     [Tooltip("Slider height")]
     public float height = 16.00f;
 
+    [Tooltip("Minimum scale for generated obstacles")]
+    public float minObstacleScale = 1.00f;
+
+    [Tooltip("Maximum scale for generated obstacles")]
+    public float maxObstacleScale = 10.00f;
+
     public Vector3 TopRightWorldPos
     {
         get
@@ -193,13 +199,13 @@ public class Slider : MonoBehaviour {
                     GameObject obstacleObject = GetRandomObstacle();
                     Obstacle obstacle = obstacleObject.GetComponent<Obstacle>();
                     obstacle.SetRandomColor();
-                    obstacle.SetRandomScale(1.00f, 10.00f);
+                    obstacle.SetRandomScale(minObstacleScale, maxObstacleScale);
                     obstacle.SetRandomRotation();
 
                     Vector3Int cellPos = new Vector3Int(i, j, 0);
                     obstacleObject.transform.localPosition = sliderGrid.CellToLocal(cellPos);
 
-                    if (IsObjectInBounds(obstacleObject, "horizontal") && !IsObjectPositionOccupied(obstacleObject))
+                    if (WillObjectStayInBounds(obstacleObject, "horizontal") && !IsObjectPositionOccupied(obstacleObject))
                     {
                         // object is already there, no need to add again
                         MarkOccupied(obstacleObject);
@@ -211,7 +217,7 @@ public class Slider : MonoBehaviour {
                             float xSpeed = Random.Range(-10.00f, 10.00f);
                             float ySpeed = 0;
                             float zSpeed = Random.Range(-50.00f, 50.00f);
-                            obstacleObject.GetComponent<Obstacle>().StartSpinning(new Vector3(xSpeed, ySpeed, zSpeed));
+                            obstacle.StartSpinning(new Vector3(xSpeed, ySpeed, zSpeed));
                         }
                     }
                     else
@@ -238,7 +244,7 @@ public class Slider : MonoBehaviour {
     }
 
     /// <summary>
-    /// Checks if object is within boundaries
+    /// Checks if object will stay within bounds even if its rotated
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="direction">
@@ -248,7 +254,7 @@ public class Slider : MonoBehaviour {
     /// "all" - checks all bounds
     /// </param>
     /// <returns>True if object is within specified bounds, false otherwise</returns>
-    private bool IsObjectInBounds(GameObject obj, string direction = "all")
+    private bool WillObjectStayInBounds(GameObject obj, string direction = "all")
     {
         // use bounds to handle rotated objects
         Bounds bounds = obj.GetComponentInChildren<SpriteRenderer>().bounds;
