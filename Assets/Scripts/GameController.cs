@@ -13,12 +13,16 @@ public class GameController : MonoBehaviour {
 
     [Tooltip("Prefab for sliders that will contain obstalces")]
     public GameObject sliderPrefab;
-    
+
+    [Tooltip("Initial game speed we will be moving at")]
+    public float gameSpeed = 3.00f;
+
     private Queue<GameObject> sliderQueue;
     private List<GameObject> movingSlidersList;
     private Dictionary<GameObject, bool> sliderReadyStates;
     private Vector3 screenBottomLeftWorldPos;
     private Vector3 screenTopRightWorldPos;
+    private float lastUpdatedTime = 0;
 
     // Use this for initialization
     private void Start()
@@ -57,6 +61,13 @@ public class GameController : MonoBehaviour {
     // Update is called once per frame
     private void Update()
     {
+        // adjust level based on time in game
+        if (Time.realtimeSinceStartup - lastUpdatedTime > 20.00f)
+        {
+            lastUpdatedTime = Time.realtimeSinceStartup;
+            gameSpeed++;
+        }
+
         // initialize next container
         GameObject firstSliderObject = sliderQueue.Peek();
         if (!sliderReadyStates[firstSliderObject])
@@ -73,7 +84,7 @@ public class GameController : MonoBehaviour {
             {
                 GameObject nextSliderObject = sliderQueue.Dequeue();
                 Slider nextSlider = nextSliderObject.GetComponent<Slider>();
-                nextSlider.StartMoving();
+                nextSlider.StartMoving(gameSpeed);
                 movingSlidersList.Add(nextSliderObject);
             }            
         }

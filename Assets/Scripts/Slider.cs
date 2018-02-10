@@ -106,6 +106,12 @@ public class Slider : MonoBehaviour {
         isMoving = true;
     }
 
+    public void StartMoving(float speed)
+    {
+        this.speed = speed;
+        StartMoving();
+    }
+
     public void StopMoving()
     {
         isMoving = false;
