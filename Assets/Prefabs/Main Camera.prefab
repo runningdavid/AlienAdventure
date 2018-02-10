@@ -52,7 +52,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.8156863, g: 1, b: 0.9843137, a: 0.5529412}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -101,6 +101,8 @@ MonoBehaviour:
   isFollowEnabled: 0
   playerObject: {fileID: 0}
   offset: {x: 0, y: 0, z: -10}
+  endColor: {r: 0, g: 0.047058824, b: 0.2784314, a: 0.5529412}
+  timeToTransitToEndColor: 30
 --- !u!124 &124647558655640846
 Behaviour:
   m_ObjectHideFlags: 1
