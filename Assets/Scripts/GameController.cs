@@ -17,6 +17,9 @@ public class GameController : MonoBehaviour {
     [Tooltip("Initial game speed we will be moving at")]
     public float gameSpeed = 3.00f;
 
+    [Tooltip("Max game speed allowed")]
+    public float maxGameSpeed = 10.00f;
+
     private Queue<GameObject> sliderQueue;
     private List<GameObject> movingSlidersList;
     private Dictionary<GameObject, bool> sliderReadyStates;
@@ -62,7 +65,7 @@ public class GameController : MonoBehaviour {
     private void Update()
     {
         // adjust level based on time in game
-        if (Time.realtimeSinceStartup - lastUpdatedTime > 20.00f)
+        if (Time.realtimeSinceStartup - lastUpdatedTime > 20.00f && gameSpeed < maxGameSpeed)
         {
             lastUpdatedTime = Time.realtimeSinceStartup;
             gameSpeed++;

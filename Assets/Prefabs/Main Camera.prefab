@@ -102,7 +102,7 @@ MonoBehaviour:
   playerObject: {fileID: 0}
   offset: {x: 0, y: 0, z: -10}
   endColor: {r: 0, g: 0.047058824, b: 0.2784314, a: 0.5529412}
-  timeToTransitToEndColor: 30
+  timeToTransitToEndColor: 60
 --- !u!124 &124647558655640846
 Behaviour:
   m_ObjectHideFlags: 1

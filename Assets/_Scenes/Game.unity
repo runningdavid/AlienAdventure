@@ -203,8 +203,8 @@ MonoBehaviour:
   - {fileID: 1614045225632160, guid: 62ad7732103357c49a16b1826ad328a4, type: 2}
   minScale: 0.5
   maxScale: 3
-  minGravityScale: 0.3
-  maxGravityScale: 0.5
+  minGravityScale: 0.1
+  maxGravityScale: 0.3
   probability: 0.01
 --- !u!1 &337584533
 GameObject:
@@ -434,51 +434,6 @@ Prefab:
       propertyPath: playerObject
       value: 
       objectReference: {fileID: 2109967493}
-    - target: {fileID: 20711270765961522, guid: 9613f6210bd5f3643985980255ed8a8d,
-        type: 2}
-      propertyPath: m_BackGroundColor.r
-      value: 0.8156863
-      objectReference: {fileID: 0}
-    - target: {fileID: 20711270765961522, guid: 9613f6210bd5f3643985980255ed8a8d,
-        type: 2}
-      propertyPath: m_BackGroundColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 20711270765961522, guid: 9613f6210bd5f3643985980255ed8a8d,
-        type: 2}
-      propertyPath: m_BackGroundColor.b
-      value: 0.9843137
-      objectReference: {fileID: 0}
-    - target: {fileID: 20711270765961522, guid: 9613f6210bd5f3643985980255ed8a8d,
-        type: 2}
-      propertyPath: m_BackGroundColor.a
-      value: 0.5529412
-      objectReference: {fileID: 0}
-    - target: {fileID: 114878354830604068, guid: 9613f6210bd5f3643985980255ed8a8d,
-        type: 2}
-      propertyPath: endColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114878354830604068, guid: 9613f6210bd5f3643985980255ed8a8d,
-        type: 2}
-      propertyPath: endColor.g
-      value: 0.047058824
-      objectReference: {fileID: 0}
-    - target: {fileID: 114878354830604068, guid: 9613f6210bd5f3643985980255ed8a8d,
-        type: 2}
-      propertyPath: endColor.b
-      value: 0.2784314
-      objectReference: {fileID: 0}
-    - target: {fileID: 114878354830604068, guid: 9613f6210bd5f3643985980255ed8a8d,
-        type: 2}
-      propertyPath: endColor.a
-      value: 0.5529412
-      objectReference: {fileID: 0}
-    - target: {fileID: 114878354830604068, guid: 9613f6210bd5f3643985980255ed8a8d,
-        type: 2}
-      propertyPath: timeToTransitToEndColor
-      value: 30
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9613f6210bd5f3643985980255ed8a8d, type: 2}
   m_IsPrefabParent: 0
@@ -660,6 +615,56 @@ Prefab:
       propertyPath: ShapeModule.radiusThickness
       value: 1.0000
       objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48e7708fcf9e47246a145a3b8b73fa72, type: 2}
   m_IsPrefabParent: 0
@@ -711,7 +716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.97794116, g: 0.8295639, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
