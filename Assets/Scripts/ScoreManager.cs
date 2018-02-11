@@ -16,6 +16,11 @@ public class ScoreManager : MonoBehaviour {
     // Use this for initialization
     private void Start()
     {
+        float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
+        Vector3 upperRightPos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distanceToCamera));
+        Vector3 scoreDisplayPos = upperRightPos - new Vector3(1, 1, 0);
+        transform.position = scoreDisplayPos;
+
         score = 0;
         scoreText = GetComponent<Text>();
         scoreText.text = "0 ft";
