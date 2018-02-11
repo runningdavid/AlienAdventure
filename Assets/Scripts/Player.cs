@@ -51,6 +51,11 @@ public class Player : MonoBehaviour {
         {
             MoveWithMouse();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            levelManager.QuitRequest();
+        }
         
     }
 
