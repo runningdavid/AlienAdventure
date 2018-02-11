@@ -282,8 +282,8 @@ MonoBehaviour:
   - {fileID: 1614045225632160, guid: 62ad7732103357c49a16b1826ad328a4, type: 2}
   minScale: 0.5
   maxScale: 3
-  minGravityScale: 0.1
-  maxGravityScale: 0.5
+  minGravityScale: 0.5
+  maxGravityScale: 0.8
   probability: 0.05
 --- !u!1 &244355878
 GameObject:
@@ -1793,6 +1793,31 @@ Prefab:
         type: 2}
       propertyPath: ShapeModule.radiusThickness
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 198431650600282304, guid: 48e7708fcf9e47246a145a3b8b73fa72,
         type: 2}

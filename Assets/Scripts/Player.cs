@@ -14,6 +14,9 @@ public class Player : MonoBehaviour {
     [Tooltip("Padding of player object relative to the horizontal boundary")]
     public float yPadding = 0.5f;
 
+    [Tooltip("For touch screen, we want to make some offset so that fingers don't block character")]
+    public Vector3 playerMouseOffset = new Vector3(0, 0.10f, 0);
+
     public LevelManager levelManager;
 
     public bool IsInvinsible = false;
@@ -62,7 +65,7 @@ public class Player : MonoBehaviour {
         Vector3 mousePosInWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosInWorldPoint.x = Mathf.Clamp(mousePosInWorldPoint.x, xMin, xMax);
         mousePosInWorldPoint.y = Mathf.Clamp(mousePosInWorldPoint.y, yMin, yMax);
-        transform.position = new Vector3(mousePosInWorldPoint.x, mousePosInWorldPoint.y, 10);
+        transform.position = new Vector3(mousePosInWorldPoint.x, mousePosInWorldPoint.y, 10) + playerMouseOffset;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

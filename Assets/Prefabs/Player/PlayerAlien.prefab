@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 50234944868287704}
   - component: {fileID: 61128859786124522}
   - component: {fileID: 114141189467237672}
+  - component: {fileID: 95987170509737088}
   m_Layer: 0
   m_Name: PlayerAlien
   m_TagString: Untagged
@@ -82,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1826665699255634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: -4, z: 1}
+  m_LocalPosition: {x: -0, y: -3.18, z: 1}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4788680279855602}
@@ -148,6 +149,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.92602813, y: 1.3575306}
   m_EdgeRadius: 0
+--- !u!95 &95987170509737088
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1826665699255634}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5d47cecc3f9725e4f85726d6606916af, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114141189467237672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -163,6 +181,7 @@ MonoBehaviour:
   playerSpeed: 0
   xPadding: 0.5
   yPadding: 0.5
+  playerMouseOffset: {x: 0, y: 0.5, z: 0}
   levelManager: {fileID: 114131346817735498, guid: 90bad89e908759047ac80899e99390c8,
     type: 2}
   IsInvinsible: 0
@@ -178,7 +197,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -226,7 +245,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1403504090
+  randomSeed: 532281341
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -316,7 +335,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.17647058, g: 0.17647058, b: 0.17647058, a: 1}
+      maxColor: {r: 0.48263186, g: 0.22334558, b: 0.5955882, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -378,7 +397,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.4
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -786,7 +805,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 20
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -2796,7 +2815,7 @@ ParticleSystem:
     maxLights: 20
   TrailModule:
     enabled: 0
-    ratio: 1
+    ratio: 0.1
     lifetime:
       serializedVersion: 2
       minMaxState: 0
@@ -3532,7 +3551,7 @@ ParticleSystemRenderer:
   m_Pivot: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
