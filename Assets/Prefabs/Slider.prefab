@@ -45,10 +45,20 @@ MonoBehaviour:
   - {fileID: 1488981009819708, guid: 67b96c9d91235c245a6de8216dc80324, type: 2}
   - {fileID: 1583339156582410, guid: fbb25764d99d85948a784b6f0524ab4d, type: 2}
   - {fileID: 1614045225632160, guid: 62ad7732103357c49a16b1826ad328a4, type: 2}
+  powerUpPrefabArray:
+  - {fileID: 1090189520945846, guid: e6206e0932f22424e92044e28721ed4c, type: 2}
+  - {fileID: 1541539029494116, guid: 866df215c2b539f41920d3ba02812337, type: 2}
+  - {fileID: 1975404802043472, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
+  - {fileID: 1266428586098746, guid: df44d1722e75096428b87a885895fd94, type: 2}
+  - {fileID: 1591574979473460, guid: efc590d03c4cf5643bd55419ff3efe3f, type: 2}
   translate: {x: 0, y: -1, z: 0}
   speed: 3
   width: 9
   height: 16
+  minObstacleScale: 1
+  maxObstacleScale: 10
+  obstacleSpawnProbability: 0.03
+  obstacleSpinProbability: 0.5
 --- !u!224 &224165540184982234
 RectTransform:
   m_ObjectHideFlags: 1

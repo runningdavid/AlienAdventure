@@ -14,11 +14,23 @@ public class GameController : MonoBehaviour {
     [Tooltip("Prefab for sliders that will contain obstalces")]
     public GameObject sliderPrefab;
 
-    [Tooltip("Initial game speed we will be moving at")]
+    [Tooltip("Current gamespeed we are moving at")]
     public float gameSpeed = 3.00f;
 
     [Tooltip("Max game speed allowed")]
     public float maxGameSpeed = 10.00f;
+
+    [Tooltip("Current obstacle spawn probability")]
+    public float obstacleSpawnProbability = 0.03f;
+
+    [Tooltip("Max obstacle spawn probability")]
+    public float maxObstacleSpawnProbability = 0.06f;
+
+    [Tooltip("Current obstacle rotation probability")]
+    public float obstacleRotationProbability = 0.30f;
+
+    [Tooltip("Max obstacle rotation probability")]
+    public float maxObstacleRotationProbability = 0.70f;
 
     [Tooltip("Time we will wait before increase game speed to next level")]
     public float timeIntervalBetweenLevel = 20.00f;
@@ -72,6 +84,7 @@ public class GameController : MonoBehaviour {
         {
             lastUpdatedTime = Time.realtimeSinceStartup;
             gameSpeed++;
+            obstacleSpawnProbability += 0.02f;
         }
 
         // initialize next container
@@ -79,6 +92,7 @@ public class GameController : MonoBehaviour {
         if (!sliderReadyStates[firstSliderObject])
         {
             Slider firstSlider = firstSliderObject.GetComponent<Slider>();
+            firstSlider.obstacleSpawnProbability = obstacleSpawnProbability;
             firstSlider.GenerateObstacles();
             sliderReadyStates[firstSliderObject] = true;
 

@@ -55,7 +55,7 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("You've collided with an obstacle");
+        Debug.Log("You've collided with an obstacle" + " " + collision.name);
 
         // TODO: handle lose condition
         if (!IsInvinsible)

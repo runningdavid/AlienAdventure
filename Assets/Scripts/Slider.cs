@@ -8,6 +8,9 @@ public class Slider : MonoBehaviour {
     [Tooltip("An array of obstacle prefabs")]
     public GameObject[] obstaclePrefabArray;
 
+    [Tooltip("An array of power ups")]
+    public GameObject[] powerUpPrefabArray;
+
     [Tooltip("The direction slider will be moving towards")]
     public Vector3 translate = Vector3.down;
 
@@ -25,6 +28,10 @@ public class Slider : MonoBehaviour {
 
     [Tooltip("Maximum scale for generated obstacles")]
     public float maxObstacleScale = 10.00f;
+
+    public float obstacleSpawnProbability = 0.03f;
+
+    public float obstacleSpinProbability = 0.5f;
 
     public Vector3 TopRightWorldPos
     {
@@ -187,14 +194,12 @@ public class Slider : MonoBehaviour {
     /// <param name="objList"></param>
     public void GenerateObstacles()
     {
-        float generationProbability = 0.03f;
-        float rotationProbability = 0.5f;
 
         for (int i = BottomLeftCellPos.x; i <= TopRightCellPos.x; i++)
         {
             for (int j = BottomLeftCellPos.y; j <= TopRightCellPos.y; j++)
             {
-                if (Random.Range(0.00f, 1.00f) <= generationProbability)
+                if (Random.Range(0.00f, 1.00f) <= obstacleSpawnProbability)
                 {
                     GameObject obstacleObject = GetRandomObstacle();
                     Obstacle obstacle = obstacleObject.GetComponent<Obstacle>();
@@ -212,7 +217,7 @@ public class Slider : MonoBehaviour {
                         
                         // TODO: experiment with obstacle spinning, but when spinning it might exceed horizontal position again
                         // need to use bounds to calculate maximum possible object width
-                        if (Random.Range(0.00f, 1.00f) <= rotationProbability)
+                        if (Random.Range(0.00f, 1.00f) <= obstacleSpinProbability)
                         {
                             float xSpeed = Random.Range(-10.00f, 10.00f);
                             float ySpeed = 0;
