@@ -69,8 +69,8 @@ public class Obstacle : MonoBehaviour {
 
     public void SetRandomRotation()
     {
-        float xAngle = Random.Range(0, 30);
-        float yAngle = Random.Range(0, 30);
+        float xAngle = Random.Range(0, 10);
+        float yAngle = Random.Range(0, 10);
         float zAngle = Random.Range(0, 359);
         transform.Rotate(new Vector3(xAngle, yAngle, zAngle));
     }

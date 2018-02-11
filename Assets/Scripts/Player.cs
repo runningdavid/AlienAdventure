@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
     public float yPadding = 0.5f;
 
     [Tooltip("For touch screen, we want to make some offset so that fingers don't block character")]
-    public Vector3 playerMouseOffset = new Vector3(0, 0.10f, 0);
+    public Vector3 playerMouseOffset = new Vector3(0, 0.75f, 0);
 
     public LevelManager levelManager;
 
