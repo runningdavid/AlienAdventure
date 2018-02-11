@@ -20,6 +20,9 @@ public class GameController : MonoBehaviour {
     [Tooltip("Max game speed allowed")]
     public float maxGameSpeed = 10.00f;
 
+    [Tooltip("Time we will wait before increase game speed to next level")]
+    public float timeIntervalBetweenLevel = 20.00f;
+    
     private Queue<GameObject> sliderQueue;
     private List<GameObject> movingSlidersList;
     private Dictionary<GameObject, bool> sliderReadyStates;
@@ -65,7 +68,7 @@ public class GameController : MonoBehaviour {
     private void Update()
     {
         // adjust level based on time in game
-        if (Time.realtimeSinceStartup - lastUpdatedTime > 20.00f && gameSpeed < maxGameSpeed)
+        if (Time.realtimeSinceStartup - lastUpdatedTime > timeIntervalBetweenLevel && gameSpeed < maxGameSpeed)
         {
             lastUpdatedTime = Time.realtimeSinceStartup;
             gameSpeed++;
@@ -78,6 +81,12 @@ public class GameController : MonoBehaviour {
             Slider firstSlider = firstSliderObject.GetComponent<Slider>();
             firstSlider.GenerateObstacles();
             sliderReadyStates[firstSliderObject] = true;
+
+            if (gameSpeed == maxGameSpeed)
+            {
+                GameObject.Find("MeteorSpawner").GetComponent<MeteorSpawner>().SpawnRandom();
+            }
+
         }
         
         // update in progress containers

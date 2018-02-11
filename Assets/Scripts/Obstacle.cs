@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour {
 
+    public enum Shapes
+    {
+        Circle,
+        Hexagon,
+        Square,
+        Star,
+        Triangle
+    }
+
+    public Shapes shape;
+
     public Vector3 rotationSpeed = new Vector3(0, 0, 0);
 
     private bool shouldRotate = false;

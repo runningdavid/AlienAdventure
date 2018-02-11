@@ -244,7 +244,7 @@ public class Slider : MonoBehaviour {
     }
 
     /// <summary>
-    /// Checks if object will stay within bounds even if its rotated
+    /// Checks if object will stay within bounds even if its rotated    /// 
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="direction">
@@ -260,6 +260,13 @@ public class Slider : MonoBehaviour {
         Bounds bounds = obj.GetComponentInChildren<SpriteRenderer>().bounds;
         Vector3 minPos = sliderGrid.WorldToLocal(bounds.min);
         Vector3 maxPos = sliderGrid.WorldToLocal(bounds.max);
+
+        // square diagonal is 1.414 so might exceed slider bottom when rotated
+        if (obj.GetComponent<Obstacle>().shape == Obstacle.Shapes.Square)
+        {
+            minPos = new Vector3(minPos.x * 1.414f, minPos.y * 1.414f, minPos.z);
+            maxPos = new Vector3(maxPos.x * 1.414f, maxPos.y * 1.414f, maxPos.z);
+        }
 
         bool isInVerticalBounds = minPos.x >= BottomLeftLocalPos.x && maxPos.x <= TopRightLocalPos.x;
         bool isInHorizontalBounds = minPos.y >= BottomLeftLocalPos.y && maxPos.y <= TopRightLocalPos.y;
@@ -288,6 +295,8 @@ public class Slider : MonoBehaviour {
         Vector3Int minPos = sliderGrid.WorldToCell(bounds.min);
         Vector3Int maxPos = sliderGrid.WorldToCell(bounds.max);
 
+        // TODO: handle square diagonal (will mostly be fine even not handling)
+
         for (int i = minPos.x; i <= maxPos.x; i++)
         {
             for (int j = minPos.y; j <= maxPos.y; j++)
@@ -312,6 +321,8 @@ public class Slider : MonoBehaviour {
         Bounds bounds = obj.GetComponentInChildren<SpriteRenderer>().bounds;
         Vector3Int minPos = sliderGrid.WorldToCell(bounds.min);
         Vector3Int maxPos = sliderGrid.WorldToCell(bounds.max);
+
+        // TODO: handle square diagonal (will mostly be fine even not handling)
 
         for (int i = minPos.x; i <= maxPos.x; i++)
         {
