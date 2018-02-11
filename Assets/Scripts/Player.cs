@@ -80,7 +80,14 @@ public class Player : MonoBehaviour {
         // TODO: handle lose condition
         if (!IsInvinsible)
         {
-            levelManager.LoadLevel("Lose");
+            isMoving = false;
+            GameObject.FindObjectOfType<ScoreManager>().StopCounting();
+            Rigidbody2D rigidBody = gameObject.GetComponent<Rigidbody2D>();
+            rigidBody.bodyType = RigidbodyType2D.Dynamic;
+            rigidBody.AddForce(new Vector2(0.00f, -20.00f));
+            rigidBody.AddTorque(100.00f);
+            GameObject.Find("LoseMenu").GetComponent<Animator>().SetTrigger("gameLost");
+            //levelManager.LoadLevel("Lose");
         }
         
     }
