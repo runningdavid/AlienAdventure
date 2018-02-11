@@ -88,7 +88,7 @@ public class Player : MonoBehaviour {
             Rigidbody2D rigidBody = gameObject.GetComponent<Rigidbody2D>();
             rigidBody.bodyType = RigidbodyType2D.Dynamic;
             rigidBody.AddForce(new Vector2(0.00f, -20.00f));
-            rigidBody.AddTorque(100.00f);
+            rigidBody.AddTorque(-300.00f);
 
             GameObject.FindObjectOfType<GameController>().EndGame();
             //levelManager.LoadLevel("Lose");
