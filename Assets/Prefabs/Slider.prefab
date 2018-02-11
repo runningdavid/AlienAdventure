@@ -40,11 +40,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePrefabArray:
-  - {fileID: 1377588612034744, guid: 866f85f068573e7438af931dd29fc157, type: 2}
-  - {fileID: 1774597779264104, guid: dc10d290635506043aa45eba1f7affc8, type: 2}
-  - {fileID: 1488981009819708, guid: 67b96c9d91235c245a6de8216dc80324, type: 2}
-  - {fileID: 1583339156582410, guid: fbb25764d99d85948a784b6f0524ab4d, type: 2}
-  - {fileID: 1614045225632160, guid: 62ad7732103357c49a16b1826ad328a4, type: 2}
+  - {fileID: 1206267911622828, guid: af015432bb08a4a448999140b166c4e6, type: 2}
+  - {fileID: 1568282881065640, guid: 3483cd09dd44d79469639a17075b3360, type: 2}
+  - {fileID: 1377588612034744, guid: 2b834638d580f7348947d986618212d9, type: 2}
+  - {fileID: 1886951608445958, guid: 1463e814e3c72584e971c8875855d24f, type: 2}
+  - {fileID: 1227175052408460, guid: 5cd3afe1b263579439db5d8a1460b123, type: 2}
+  - {fileID: 1898781117360256, guid: 1976dcc64b33c5441867df1b8d0bcf04, type: 2}
+  - {fileID: 1129086558208808, guid: e78af28d606e08848853a2f55bb82fe3, type: 2}
+  - {fileID: 1163476534190048, guid: 66f152cbaa3ca67418a3e5805a47952d, type: 2}
+  - {fileID: 1476919404102574, guid: 3aa9f57cc7e2cb64dac408d64f75b430, type: 2}
+  - {fileID: 1976725954474034, guid: ecb41fa0bfbe56346b208587606d20fd, type: 2}
   powerUpPrefabArray:
   - {fileID: 1090189520945846, guid: e6206e0932f22424e92044e28721ed4c, type: 2}
   - {fileID: 1541539029494116, guid: 866df215c2b539f41920d3ba02812337, type: 2}

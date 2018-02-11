@@ -203,7 +203,7 @@ public class Slider : MonoBehaviour {
                 {
                     GameObject obstacleObject = GetRandomObstacle();
                     Obstacle obstacle = obstacleObject.GetComponent<Obstacle>();
-                    obstacle.SetRandomColor();
+                    //obstacle.SetRandomColor();
                     obstacle.SetRandomScale(minObstacleScale, maxObstacleScale);
                     obstacle.SetRandomRotation();
 
