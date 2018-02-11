@@ -34,7 +34,8 @@ public class GameController : MonoBehaviour {
 
     [Tooltip("Time we will wait before increase game speed to next level")]
     public float timeIntervalBetweenLevel = 20.00f;
-    
+
+    private bool gameRunning = false;
     private Queue<GameObject> sliderQueue;
     private List<GameObject> movingSlidersList;
     private Dictionary<GameObject, bool> sliderReadyStates;
@@ -79,6 +80,22 @@ public class GameController : MonoBehaviour {
     // Update is called once per frame
     private void Update()
     {
+        if (!gameRunning && Input.GetMouseButtonDown(0))
+        {
+            GameObject.Find("Menu").GetComponent<Animator>().SetTrigger("startMoving");
+            GameObject.Find("Player").GetComponent<Animator>().SetTrigger("gameStarted");
+            GameObject.FindObjectOfType<Player>().EnableControl();
+            GameObject.Find("Player").GetComponentInChildren<ParticleSystem>().Play();
+            GameObject.FindObjectOfType<ScoreManager>().StartCounting();
+            GameObject.FindObjectOfType<CameraController>().StartColorTransition();
+            gameRunning = true;
+        }
+
+        if (!gameRunning)
+        {
+            return;
+        }
+
         // adjust level based on time in game
         if (Time.realtimeSinceStartup - lastUpdatedTime > timeIntervalBetweenLevel && gameSpeed < maxGameSpeed)
         {

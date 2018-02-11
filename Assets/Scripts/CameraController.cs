@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour {
     public float timeToTransitToEndColor;
 
     private Color beginColor;
+    private bool isTransition = false;
 
     // Use this for initialization
     private void Start()
@@ -28,8 +29,8 @@ public class CameraController : MonoBehaviour {
 
     // Update is called once per frame
     private void Update()
-    {
-        if (timeToTransitToEndColor > Time.deltaTime)
+    {   
+        if (isTransition && timeToTransitToEndColor > Time.deltaTime)
         {
             Color transitionColor = Color.Lerp(beginColor, endColor, Time.deltaTime / timeToTransitToEndColor);
             Camera.main.backgroundColor = transitionColor;
@@ -46,5 +47,10 @@ public class CameraController : MonoBehaviour {
             transform.Translate(cameraTranslate * cameraSpeed * Time.deltaTime);
         }
         
+    }
+
+    public void StartColorTransition()
+    {
+        isTransition = true;
     }
 }

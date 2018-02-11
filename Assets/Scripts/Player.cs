@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
 
     public bool IsInvinsible = false;
 
+    private bool isMoving = false;
     private float xMin;
     private float xMax;
     private float yMin;
@@ -33,15 +34,26 @@ public class Player : MonoBehaviour {
         xMax = upperRightPos.x - xPadding;
         yMin = bottomLeftPos.y + yPadding;
         yMax = upperRightPos.y - yPadding;
+
+        transform.position = new Vector3(0, -2, 10);
     }
 
     // Update is called once per frame
     private void Update()
     {
-        transform.Translate(playerTranslate * playerSpeed * Time.deltaTime);
+        //transform.Translate(playerTranslate * playerSpeed * Time.deltaTime);
         // TODO: may need to add object rotation
         // TODO: player control method is subject to change
-        MoveWithMouse();
+        if (isMoving)
+        {
+            MoveWithMouse();
+        }
+        
+    }
+
+    public void EnableControl()
+    {
+        isMoving = true;
     }
 
     // TODO: may need to set a playerDistanceToCamera variable

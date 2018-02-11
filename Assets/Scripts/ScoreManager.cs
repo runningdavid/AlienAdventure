@@ -7,7 +7,9 @@ public class ScoreManager : MonoBehaviour {
 
     public static int score;
 
-    public static int scorePerSecond = 1;
+    public static int scorePerSecond = 1000;
+
+    private bool isCounting = false;
 
     private Text scoreText;
 
@@ -16,13 +18,27 @@ public class ScoreManager : MonoBehaviour {
     {
         score = 0;
         scoreText = GetComponent<Text>();
-        scoreText.text = "0";
+        scoreText.text = "0 ft";
     }
 
     // Update is called once per frame
     private void Update()
     {
-        score += Mathf.CeilToInt(scorePerSecond * Time.deltaTime);
-        scoreText.text = score.ToString();
+        if (isCounting)
+        {
+            score += Mathf.CeilToInt(scorePerSecond * Time.deltaTime);
+            scoreText.text = score.ToString() + " ft";
+        }
+        
+    }
+
+    public void StartCounting()
+    {
+        isCounting = true;
+    }
+
+    public void StopCounting()
+    {
+        isCounting = false;
     }
 }
