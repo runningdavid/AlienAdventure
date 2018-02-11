@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -87,6 +90,8 @@ public class Player : MonoBehaviour {
             rigidBody.AddForce(new Vector2(0.00f, -20.00f));
             rigidBody.AddTorque(100.00f);
             GameObject.Find("LoseMenu").GetComponent<Animator>().SetTrigger("gameLost");
+            GameObject.FindObjectOfType<BestScore>().LogBestScore();
+            GameObject.Find("LoseScore").GetComponent<Text>().text = string.Format("You reached\n{0} ft", ScoreManager.score.ToString());
             //levelManager.LoadLevel("Lose");
         }
         
