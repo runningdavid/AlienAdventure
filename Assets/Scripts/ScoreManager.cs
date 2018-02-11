@@ -18,7 +18,7 @@ public class ScoreManager : MonoBehaviour {
     {
         float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
         Vector3 upperRightPos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distanceToCamera));
-        Vector3 scoreDisplayPos = upperRightPos - new Vector3(1, 1, 0);
+        Vector3 scoreDisplayPos = upperRightPos - new Vector3(0.30f, 0.75f, 0);
         transform.position = scoreDisplayPos;
 
         score = 0;
