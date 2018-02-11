@@ -84,14 +84,13 @@ public class Player : MonoBehaviour {
         if (!IsInvinsible)
         {
             isMoving = false;
-            GameObject.FindObjectOfType<ScoreManager>().StopCounting();
+
             Rigidbody2D rigidBody = gameObject.GetComponent<Rigidbody2D>();
             rigidBody.bodyType = RigidbodyType2D.Dynamic;
             rigidBody.AddForce(new Vector2(0.00f, -20.00f));
             rigidBody.AddTorque(100.00f);
-            GameObject.Find("LoseMenu").GetComponent<Animator>().SetTrigger("gameLost");
-            GameObject.FindObjectOfType<BestScore>().LogBestScore();
-            GameObject.Find("LoseScore").GetComponent<Text>().text = string.Format("You reached\n{0} ft", ScoreManager.score.ToString());
+
+            GameObject.FindObjectOfType<GameController>().EndGame();
             //levelManager.LoadLevel("Lose");
         }
         

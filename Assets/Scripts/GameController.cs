@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
     
@@ -148,6 +149,14 @@ public class GameController : MonoBehaviour {
             }
         }
 
+    }
+
+    public void EndGame()
+    {
+        GameObject.FindObjectOfType<ScoreManager>().StopCounting();
+        GameObject.Find("LoseMenu").GetComponent<Animator>().SetTrigger("gameLost");
+        GameObject.FindObjectOfType<BestScore>().LogBestScore();
+        GameObject.Find("LoseScore").GetComponent<Text>().text = string.Format("You reached\n{0} ft", ScoreManager.score.ToString());
     }
 
     private void PutSliderAtBeginPos(GameObject sliderObject)
