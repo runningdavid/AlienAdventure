@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour {
 
     public static int score;
 
-    public static int scorePerSecond = 1000;
+    public int scorePerSecond = 1000;
 
     private bool isCounting = false;
 

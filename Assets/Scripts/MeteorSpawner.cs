@@ -49,12 +49,19 @@ public class MeteorSpawner : MonoBehaviour {
                 // generate meteor obstacle object
                 GameObject meteorObject = GetRandomObstacle();
                 float xPos = Random.Range(xMin, xMax);
-                meteorObject.transform.position = new Vector3(xPos, transform.position.y, 0);
+                // use z = -2 so meteors are on top of other obstacles
+                meteorObject.transform.position = new Vector3(xPos, transform.position.y, -2);
 
                 // set scale and color
                 Obstacle obstacle = meteorObject.GetComponent<Obstacle>();
                 obstacle.SetRandomScale(minScale, maxScale);
                 obstacle.SetRandomColor();
+
+                // start random spinning
+                float xSpeed = 0;
+                float ySpeed = 0;
+                float zSpeed = Random.Range(-50.00f, 50.00f);
+                obstacle.StartSpinning(new Vector3(xSpeed, ySpeed, zSpeed));
 
                 // set rigid body 2d configurations
                 Rigidbody2D rigidBody2D = meteorObject.GetComponent<Rigidbody2D>();

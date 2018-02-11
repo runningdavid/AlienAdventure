@@ -1007,7 +1007,7 @@ Prefab:
     - target: {fileID: 114141189467237672, guid: 48e7708fcf9e47246a145a3b8b73fa72,
         type: 2}
       propertyPath: playerMouseOffset.y
-      value: 0.75
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48e7708fcf9e47246a145a3b8b73fa72, type: 2}
