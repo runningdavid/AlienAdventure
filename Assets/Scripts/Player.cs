@@ -81,7 +81,7 @@ public class Player : MonoBehaviour {
         Debug.Log("You've collided with an obstacle" + " " + collision.name);
 
         // TODO: handle lose condition
-        if (!IsInvinsible)
+        if (!IsInvinsible && collision.gameObject.GetComponent<PowerUp>() == null)
         {
             isMoving = false;
 
