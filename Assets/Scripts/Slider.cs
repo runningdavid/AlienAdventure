@@ -226,10 +226,10 @@ public class Slider : MonoBehaviour {
                         // need to use bounds to calculate maximum possible object width
                         if (Random.Range(0.00f, 1.00f) <= obstacleSpinProbability)
                         {
-                            float xSpeed = Random.Range(-10.00f, 10.00f);
-                            float ySpeed = 0;
+                            //float xSpeed = Random.Range(-10.00f, 10.00f);
+                            //float ySpeed = 0;
                             float zSpeed = Random.Range(-50.00f, 50.00f);
-                            obstacle.StartSpinning(new Vector3(xSpeed, ySpeed, zSpeed));
+                            obstacle.StartSpinning(new Vector3(0, 0, zSpeed));
                         }
                     }
                     else

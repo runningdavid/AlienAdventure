@@ -884,11 +884,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3.83
+      value: -2.86
       objectReference: {fileID: 0}
     - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.9208698
+      value: 3.94
       objectReference: {fileID: 0}
     - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1086,7 +1086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.391}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
