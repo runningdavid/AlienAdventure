@@ -91,6 +91,13 @@ public class Slider : MonoBehaviour {
     // Use this for initialization
     private void Start()
     {
+        float distanceToCamera = transform.position.z - Camera.main.transform.position.z;
+        Vector3 screenBottomLeftWorldPos = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distanceToCamera));
+        Vector3 screenTopRightWorldPos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distanceToCamera));
+
+        width = screenTopRightWorldPos.x - screenBottomLeftWorldPos.x;
+        height = screenTopRightWorldPos.y - screenBottomLeftWorldPos.y;
+
         // initialize grid
         sliderGrid = GetComponent<Grid>();
 
