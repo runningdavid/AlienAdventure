@@ -34,6 +34,9 @@ public class PowerUp : MonoBehaviour {
             switch (effect)
             {
                 case Effects.Invincible:
+                    GameObject.FindObjectOfType<Player>().IsInvinsible = true;
+                    GameObject.FindObjectOfType<Player>().GetComponentInChildren<SpriteRenderer>().color = Color.cyan;
+                    //TODO: add power up time limit
                     break;
                 case Effects.Recover:
                     break;
