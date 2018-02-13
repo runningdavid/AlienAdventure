@@ -142,6 +142,9 @@ MonoBehaviour:
   - {fileID: 1859787986480888, guid: 99af7c77429f2aa4abbc75fc8f56b2a0, type: 2}
   - {fileID: 1476919404102574, guid: 758f5e029c0886f428a3e97aa70f9cba, type: 2}
   - {fileID: 1976725954474034, guid: cde3d8e7fd81e3143aec73231711b579, type: 2}
+  - {fileID: 1205951724976948, guid: b5e6c905ee068f44d8b2b9cfe7a2a3d3, type: 2}
+  - {fileID: 1092741282131612, guid: 6b5508dcd15901747a39a2a8b3eab022, type: 2}
+  - {fileID: 1850458012861396, guid: 57a04bdf21baf884b9ddccf88f20a329, type: 2}
   powerUpPrefabArray:
   - {fileID: 1090189520945846, guid: e6206e0932f22424e92044e28721ed4c, type: 2}
   - {fileID: 1541539029494116, guid: 866df215c2b539f41920d3ba02812337, type: 2}
