@@ -48,6 +48,7 @@ public class ObstacleManager : MonoBehaviour {
             GameObject galaxy = Instantiate(collectablePrefabArray[2], sliderObject.transform.position, Quaternion.identity);
             galaxy.transform.parent = sliderObject.transform;
             hasCollectableAppeared[2] = true;
+            DataManager.SaveUnlockedCollectable(2);
             return galaxy;
         }
 
@@ -56,6 +57,7 @@ public class ObstacleManager : MonoBehaviour {
             GameObject sun = Instantiate(collectablePrefabArray[6], sliderObject.transform.position, Quaternion.identity);
             sun.transform.parent = sliderObject.transform;
             hasCollectableAppeared[6] = true;
+            DataManager.SaveUnlockedCollectable(6);
             return sun;
         }
 
@@ -64,6 +66,7 @@ public class ObstacleManager : MonoBehaviour {
             GameObject moon = Instantiate(collectablePrefabArray[3], sliderObject.transform.position, Quaternion.identity);
             moon.transform.parent = sliderObject.transform;
             hasCollectableAppeared[3] = true;
+            DataManager.SaveUnlockedCollectable(3);
             return moon;
         }
 

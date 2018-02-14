@@ -13,14 +13,7 @@ public class BestScore : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if (File.Exists(Application.persistentDataPath + "/gameData.gd"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/gameData.gd", FileMode.Open);
-            bestScore = (int)bf.Deserialize(file);
-            file.Close();
-        }
-
+        int bestScore = DataManager.GetBestScore();
         bestScoreText.text = string.Format("Best: {0} mi", bestScore.ToString());
     }
 	
@@ -33,12 +26,7 @@ public class BestScore : MonoBehaviour {
     {
         if (ScoreManager.score > bestScore)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            // overwrites existing file
-            FileStream file = File.Open(Application.persistentDataPath + "/gameData.gd", FileMode.Create);
-            bf.Serialize(file, ScoreManager.score);
-            bestScore = ScoreManager.score;
-            file.Close();
+            DataManager.SaveBestScore(ScoreManager.score);
         }
     }
 }

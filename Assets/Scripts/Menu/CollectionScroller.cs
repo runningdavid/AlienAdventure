@@ -92,7 +92,7 @@ public class CollectionScroller : MonoBehaviour {
             /////////Use this code for 2d character
             SpriteRenderer charRender = character.GetComponentInChildren<SpriteRenderer>();
             // TODO: write code to read/store unlock progress
-            if (true)
+            if (DataManager.IsCollectableUnlocked(i))
                 charRender.color = Color.white;
             else
                 charRender.color = lockedColor;
