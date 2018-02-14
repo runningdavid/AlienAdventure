@@ -117,8 +117,17 @@ public class GameController : MonoBehaviour {
             {
                 GameObject nextSliderObject = sliderQueue.Dequeue();
                 Slider nextSlider = nextSliderObject.GetComponent<Slider>();
-                nextSlider.StartMoving(gameSpeed);
-                movingSlidersList.Add(nextSliderObject);
+                if (nextSlider.HasCollectable)
+                {
+                    nextSlider.StartMoving(3.00f);
+                    movingSlidersList.Add(nextSliderObject);
+                    StartCoroutine(Wait(3.00f));
+                }
+                else
+                {
+                    nextSlider.StartMoving(gameSpeed);
+                    movingSlidersList.Add(nextSliderObject);
+                }
             }            
         }
 
@@ -178,5 +187,9 @@ public class GameController : MonoBehaviour {
         return sliderObject.transform.position.y + slider.height / 2 <= screenTopRightWorldPos.y;
     }
 
+    private IEnumerator Wait(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+    }
 
 }

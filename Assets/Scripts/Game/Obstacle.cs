@@ -15,6 +15,8 @@ public class Obstacle : MonoBehaviour {
 
     public Shapes shape;
 
+    public bool isCollectable;
+
     public Vector3 rotationSpeed = new Vector3(0, 0, 0);
 
     private bool shouldRotate = false;
@@ -59,10 +61,10 @@ public class Obstacle : MonoBehaviour {
     public void SetRandomScale(float min, float max)
     {
         float rand = Random.Range(min, max);
-        SetObjectScale(new Vector3(rand, rand, 1));
+        SetScale(new Vector3(rand, rand, 1));
     }
 
-    public void SetObjectScale(Vector3 scale)
+    public void SetScale(Vector3 scale)
     {
         transform.localScale = scale;
     }

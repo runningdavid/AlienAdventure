@@ -5,15 +5,6 @@ using UnityEngine;
 
 public class Slider : MonoBehaviour {
 
-    [Tooltip("An array of obstacle prefabs")]
-    public GameObject[] obstaclePrefabArray;
-
-    [Tooltip("Rare space collectable obstacles")]
-    public GameObject[] collectablePrefabArray;
-
-    [Tooltip("An array of power ups")]
-    public GameObject[] powerUpPrefabArray;
-
     [Tooltip("The direction slider will be moving towards")]
     public Vector3 translate = Vector3.down;
 
@@ -74,6 +65,12 @@ public class Slider : MonoBehaviour {
     private Grid sliderGrid;
     private HashSet<int> occupiedCells;
     private bool isMoving = false;
+
+    private bool hasCollectable = false;
+    public bool HasCollectable
+    {
+        get { return hasCollectable; }
+    }
 
     private Vector3Int TopRightCellPos
     {
@@ -152,6 +149,7 @@ public class Slider : MonoBehaviour {
 
         // reset masks
         occupiedCells = new HashSet<int>();
+        hasCollectable = false;
     }
 
     public void SetSpeed(float speed)
@@ -211,7 +209,25 @@ public class Slider : MonoBehaviour {
             {
                 if (Random.Range(0.00f, 1.00f) <= obstacleSpawnProbability)
                 {
-                    GameObject obstacleObject = GetRandomObstacle();
+                    GameObject obstacleObject = ObstacleManager.instance.GetRandomObstacle(gameObject);
+
+                    if (obstacleObject.GetComponent<Obstacle>().isCollectable)
+                    {
+                        Debug.Log("Collectable generated: " + obstacleObject.name);
+                        foreach (Transform child in transform)
+                        {
+                            if (child.transform != obstacleObject.transform)
+                                GameObject.Destroy(child.gameObject);
+                        }
+                        occupiedCells = new HashSet<int>();
+                                                
+                        obstacleObject.GetComponent<Obstacle>().SetScale(new Vector3(6.00f, 6.00f, 1.00f));
+                        obstacleObject.GetComponent<Obstacle>().SetRandomRotation();
+                        obstacleObject.transform.localPosition = sliderGrid.CellToLocal(new Vector3Int(0, 0, 0));
+                        hasCollectable = true;
+                        return;
+                    }
+
                     Obstacle obstacle = obstacleObject.GetComponent<Obstacle>();
                     //obstacle.SetRandomColor();
                     obstacle.SetRandomScale(minObstacleScale, maxObstacleScale);
@@ -243,19 +259,6 @@ public class Slider : MonoBehaviour {
                 }
             }
         }
-    }
-    
-    private GameObject GetRandomObstacle()
-    {
-        int index = Random.Range(0, obstaclePrefabArray.Length);
-        GameObject prefab = obstaclePrefabArray[index];
-        if (prefab == null)
-        {
-            Debug.LogError("Failed to get obstacle prefab");
-        }
-        GameObject obstacle = Instantiate(prefab, transform.position, Quaternion.identity);
-        obstacle.transform.parent = transform;
-        return obstacle;
     }
 
     /// <summary>
