@@ -184,6 +184,8 @@ MonoBehaviour:
   playerMouseOffset: {x: 0, y: 0.3, z: 0}
   levelManager: {fileID: 114131346817735498, guid: 90bad89e908759047ac80899e99390c8,
     type: 2}
+  musicToggle: {fileID: 0}
+  collectionButton: {fileID: 0}
   gameControllerObject: {fileID: 0}
   IsInvinsible: 0
 --- !u!198 &198431650600282304
