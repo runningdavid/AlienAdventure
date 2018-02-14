@@ -565,11 +565,12 @@ MonoBehaviour:
   - The United States has launched more than 1,100 satellites. You have a medium possibility
     to find one.
   - You will be able to have a closer look at the sun when you reach 500,000 miles.
+  levelManager: {fileID: 375583716}
   minCharacterScale: 1
   maxCharacterScale: 3
   characterSpace: 5
   moveForwardAmount: 2
-  swipeThresholdX: 5
+  swipeThresholdX: 1
   swipeThresholdY: 30
   rotateSpeed: 30
   snappingTime: 0.3

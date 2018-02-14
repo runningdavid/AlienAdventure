@@ -8,6 +8,8 @@ public class CollectionScroller : MonoBehaviour {
     public GameObject[] collectablePrefabArray;
     public string[] collectableIntroArray;
 
+    public LevelManager levelManager;
+
     [Header("Scroller Config")]
     [SerializeField]
     private float minCharacterScale = 1f;
@@ -115,6 +117,11 @@ public class CollectionScroller : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            levelManager.QuitRequest();
+        }
+
         #region Scrolling field
 
         if (Input.GetMouseButtonDown(0)) //Touch the screen
