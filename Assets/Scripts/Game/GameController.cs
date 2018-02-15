@@ -121,6 +121,7 @@ public class GameController : MonoBehaviour {
                 {
                     nextSlider.StartMoving(3.00f);
                     movingSlidersList.Add(nextSliderObject);
+                    DataManager.SaveUnlockedCollectable(nextSlider.transform.GetChild(0).GetComponent<Obstacle>().collectableIndex);
                     StartCoroutine(Wait(3.00f));
                 }
                 else

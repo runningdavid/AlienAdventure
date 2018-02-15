@@ -569,8 +569,8 @@ MonoBehaviour:
   minCharacterScale: 1
   maxCharacterScale: 3
   characterSpace: 5
-  moveForwardAmount: 2
-  swipeThresholdX: 1
+  moveForwardAmount: 1
+  swipeThresholdX: 10
   swipeThresholdY: 30
   rotateSpeed: 30
   snappingTime: 0.3

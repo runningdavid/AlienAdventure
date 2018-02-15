@@ -280,11 +280,11 @@ public class Slider : MonoBehaviour {
         Vector3 maxPos = sliderGrid.WorldToLocal(bounds.max);
 
         // square diagonal is 1.414 so might exceed slider bottom when rotated
-        if (obj.GetComponent<Obstacle>().shape == Obstacle.Shapes.Square)
-        {
-            minPos = new Vector3(minPos.x * 1.414f, minPos.y * 1.414f, minPos.z);
-            maxPos = new Vector3(maxPos.x * 1.414f, maxPos.y * 1.414f, maxPos.z);
-        }
+        //if (obj.GetComponent<Obstacle>().shape == Obstacle.Shapes.Square)
+        //{
+        //    minPos = new Vector3(minPos.x * 1.414f, minPos.y * 1.414f, minPos.z);
+        //    maxPos = new Vector3(maxPos.x * 1.414f, maxPos.y * 1.414f, maxPos.z);
+        //}
 
         bool isInVerticalBounds = minPos.x >= BottomLeftLocalPos.x && maxPos.x <= TopRightLocalPos.x;
         bool isInHorizontalBounds = minPos.y >= BottomLeftLocalPos.y && maxPos.y <= TopRightLocalPos.y;

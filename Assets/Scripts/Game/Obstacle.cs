@@ -3,19 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour {
-
-    public enum Shapes
-    {
-        Circle,
-        Hexagon,
-        Square,
-        Star,
-        Triangle
-    }
-
-    public Shapes shape;
-
+    
     public bool isCollectable;
+
+    public int collectableIndex;
 
     public Vector3 rotationSpeed = new Vector3(0, 0, 0);
 

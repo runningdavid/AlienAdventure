@@ -27,6 +27,7 @@ public class BestScore : MonoBehaviour {
         if (ScoreManager.score > bestScore)
         {
             DataManager.SaveBestScore(ScoreManager.score);
+            bestScore = ScoreManager.score;
         }
     }
 }

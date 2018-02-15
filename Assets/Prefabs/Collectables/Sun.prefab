@@ -118,8 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9e028df85157334892a4cfbc8ceb3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shape: 0
   isCollectable: 1
+  collectableIndex: 6
   rotationSpeed: {x: 0, y: 0, z: 0}
 --- !u!212 &212258311047186730
 SpriteRenderer:
