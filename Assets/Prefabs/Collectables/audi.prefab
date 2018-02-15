@@ -163,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCollectable: 1
   collectableIndex: 1
-  collectableScale: 1
+  collectableScale: 2
   rotationSpeed: {x: 0, y: 0, z: 0}
 --- !u!212 &212021045635281910
 SpriteRenderer:
