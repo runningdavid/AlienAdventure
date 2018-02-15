@@ -720,7 +720,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4251054262445030, guid: 18192f446252f6b448267f51fd4b170e, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1176526909433262, guid: 18192f446252f6b448267f51fd4b170e, type: 2}
       propertyPath: m_Name
@@ -1261,48 +1261,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1099116916
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -2.86
-      objectReference: {fileID: 0}
-    - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 3.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4086255320878552, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 221616efb648aba4a943d9bdd948fe61, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1293541749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1877,7 +1835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8e018e5226fd84d90cbc60cd0a79d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePerSecond: 5000
+  scorePerSecond: 2000
 --- !u!1 &1781073766
 GameObject:
   m_ObjectHideFlags: 0

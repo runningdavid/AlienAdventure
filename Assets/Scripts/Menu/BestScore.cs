@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 public class BestScore : MonoBehaviour {
 
-    public static int bestScore = 0;
+    public static int bestScore;
 
     public Text bestScoreText;
 
 	// Use this for initialization
 	void Start () {
-        int bestScore = DataManager.GetBestScore();
+        bestScore = DataManager.GetBestScore();
         bestScoreText.text = string.Format("Best: {0} mi", bestScore.ToString());
     }
 	
