@@ -8,6 +8,8 @@ public class Obstacle : MonoBehaviour {
 
     public int collectableIndex;
 
+    public int collectableScale;
+
     public Vector3 rotationSpeed = new Vector3(0, 0, 0);
 
     private bool shouldRotate = false;

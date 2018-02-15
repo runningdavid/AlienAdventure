@@ -220,8 +220,9 @@ public class Slider : MonoBehaviour {
                                 GameObject.Destroy(child.gameObject);
                         }
                         occupiedCells = new HashSet<int>();
-                                                
-                        obstacleObject.GetComponent<Obstacle>().SetScale(new Vector3(6.00f, 6.00f, 1.00f));
+
+                        float scaleFactor = obstacleObject.GetComponent<Obstacle>().collectableScale;
+                        obstacleObject.GetComponent<Obstacle>().SetScale(new Vector3(scaleFactor, scaleFactor, 1.00f));
                         obstacleObject.GetComponent<Obstacle>().SetRandomRotation();
                         obstacleObject.transform.localPosition = sliderGrid.CellToLocal(new Vector3Int(0, 0, 0));
                         hasCollectable = true;

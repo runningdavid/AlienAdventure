@@ -546,25 +546,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectablePrefabArray:
-  - {fileID: 1246988416398326, guid: ae426d976278086459a693857e7a2237, type: 2}
-  - {fileID: 1378029133560670, guid: 2353ddc0916b50b4aaf6b55432d30c82, type: 2}
-  - {fileID: 1917479145752920, guid: 42d68631d3be2454b9656999ecfd717a, type: 2}
-  - {fileID: 1824413230462448, guid: 8f2362f6ff029a945bd8e04f17a44eff, type: 2}
-  - {fileID: 1319725767261508, guid: 33456659d93e754439513bb32317b963, type: 2}
   - {fileID: 1796454977341852, guid: 323fddece50d52d4eaa66f96249c39b4, type: 2}
+  - {fileID: 1246988416398326, guid: ae426d976278086459a693857e7a2237, type: 2}
+  - {fileID: 1824413230462448, guid: 8f2362f6ff029a945bd8e04f17a44eff, type: 2}
   - {fileID: 1787273936849676, guid: 8412c774c2aaf634db8817b6437ba580, type: 2}
+  - {fileID: 1917479145752920, guid: 42d68631d3be2454b9656999ecfd717a, type: 2}
+  - {fileID: 1319725767261508, guid: 33456659d93e754439513bb32317b963, type: 2}
+  - {fileID: 1378029133560670, guid: 2353ddc0916b50b4aaf6b55432d30c82, type: 2}
   collectableIntroArray:
-  - On Feb. 6, 2018, SpaceX launched a Tesla into the space. You will have a small
-    possibility to find it.
-  - Behold the mighty of the darkness! You will find the dark planet in outer space.
-  - Expert estimate that about 200 million galaxies exist in the entire universe.
-    But finding one isn't easy.
+  - The United States has launched more than 1,100 satellites in to the space. You
+    can meet one quite easily.
+  - On Feb. 6, 2018, SpaceX launched a Tesla into the space. There's a small possibility
+    you will see it.
   - The moon is 238,900 miles away from our earth. If you get to 100,000 miles you
     can have a better look at it!
-  - Planet DJ is extremely rare to see.
-  - The United States has launched more than 1,100 satellites. You have a medium possibility
-    to find one.
-  - You will be able to have a closer look at the sun when you reach 500,000 miles.
+  - You will be able to have a closer look at the sun when you reach 200,000 miles.
+  - Experts estimate that about 200 million galaxies exist in the universe. But discovering
+    one isn't an easy task. You will probably find one above 500,000 miles.
+  - Planet DJ is beautiful yet rare to find.
+  - The Dark Planets exist in outer space. Only people who are special can see it.
   levelManager: {fileID: 375583716}
   minCharacterScale: 1
   maxCharacterScale: 3

@@ -119,7 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCollectable: 1
-  collectableIndex: 1
+  collectableIndex: 6
+  collectableScale: 8
   rotationSpeed: {x: 0, y: 0, z: 0}
 --- !u!212 &212892635036327788
 SpriteRenderer:
@@ -154,7 +155,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 1011b6122e78d054aa5e4ba7f6fa079e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
