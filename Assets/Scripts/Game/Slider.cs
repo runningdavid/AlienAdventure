@@ -21,7 +21,7 @@ public class Slider : MonoBehaviour {
     public float minObstacleScale = 1.00f;
 
     [Tooltip("Maximum scale for generated obstacles")]
-    public float maxObstacleScale = 10.00f;
+    public float maxObstacleScale = 5.00f;
 
     public float obstacleSpawnProbability = 0.03f;
 
@@ -213,6 +213,8 @@ public class Slider : MonoBehaviour {
 
                     if (obstacleObject.GetComponent<Obstacle>().isCollectable)
                     {
+                        //Obstacle collectableObstacle = obstacleObject.GetComponent<Obstacle>();
+                        //collectableObstacle.SetRandomScale(0.7f, 0.7f);
                         Debug.Log("Collectable generated: " + obstacleObject.name);
                         foreach (Transform child in transform)
                         {

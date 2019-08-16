@@ -16,16 +16,16 @@ public class GameController : MonoBehaviour {
     public GameObject sliderPrefab;
 
     [Tooltip("Current gamespeed we are moving at")]
-    public float gameSpeed = 3.00f;
+    public float gameSpeed = 1.00f;
 
     [Tooltip("Max game speed allowed")]
-    public float maxGameSpeed = 10.00f;
+    public float maxGameSpeed = 2.00f;
 
     [Tooltip("Current obstacle spawn probability")]
     public float obstacleSpawnProbability = 0.03f;
 
     [Tooltip("Max obstacle spawn probability")]
-    public float maxObstacleSpawnProbability = 0.06f;
+    public float maxObstacleSpawnProbability = 0.04f;
 
     [Tooltip("Current obstacle rotation probability")]
     public float obstacleRotationProbability = 0.30f;

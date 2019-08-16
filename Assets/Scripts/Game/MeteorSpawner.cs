@@ -48,7 +48,8 @@ public class MeteorSpawner : MonoBehaviour {
             {
                 // generate meteor obstacle object
                 GameObject meteorObject = GetRandomObstacle();
-                float xPos = Random.Range(xMin, xMax);
+                //float xPos = Random.Range(xMin, xMax);
+                float xPos = i;
                 // use z = -2 so meteors are on top of other obstacles
                 meteorObject.transform.position = new Vector3(xPos, transform.position.y, -2);
 
